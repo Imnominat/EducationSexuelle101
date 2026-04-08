@@ -10,22 +10,25 @@ public class AxisHandle : MonoBehaviour
     public Vector3 localAxis = Vector3.right;
 
     [Header("Sensibilit�s")]
-    public float slideSensitivity  = 150f;  // degr�s/m�tre de d�placement
+    public float slideSensitivity  = 150f;  // degrés/mètre de déplacement
     public float twistSensitivity  = 1.2f;  // multiplicateur du twist
 
-    [Header("Contrainte : seuil de d�tection du twist (degr�s)")]
+    [Header("Contrainte : seuil de détection du twist (degrés)")]
     public float twistDeadzone = 8f;
+
+    [Header("Inversion de la direction")]
+    public bool reverseRotation = false;  // inverser les directions de rotation
 
     private UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable _interactable;
     private Transform _controller;
     private bool _grabbed;
 
-    // �tat au moment du grab
+    // état au moment du grab
     private Vector3    _ctrlPosOnGrab;
     private Quaternion _ctrlRotOnGrab;
     private Quaternion _objRotOnGrab;
 
-    // ---- axe en world space calcul� une fois au grab ----
+    // ---- axe en world space calculé une fois au grab ----
     private Vector3 _worldAxis;
     // ---- axes perpendiculaires (pour convertir slide - rotation) ----
     private Vector3 _perpA;
@@ -52,11 +55,11 @@ public class AxisHandle : MonoBehaviour
         _ctrlRotOnGrab   = _controller.rotation;
         _objRotOnGrab    = targetObject.rotation;
 
-        // Axe en world space fig� au moment du grab
+        // Axe en world space figé au moment du grab
         _worldAxis = targetObject.TransformDirection(localAxis).normalized;
 
-        // Construction d'une base orthonorm�e autour de l'axe
-        // perpA et perpB d�finissent le "plan de glissement"
+        // Construction d'une base orthonormée autour de l'axe
+        // perpA et perpB définissent le "plan de glissement"
         Vector3 arbitrary = Mathf.Abs(Vector3.Dot(_worldAxis, Vector3.up)) < 0.95f
                             ? Vector3.up : Vector3.forward;
         _perpA = Vector3.Cross(_worldAxis, arbitrary).normalized;
@@ -71,45 +74,50 @@ public class AxisHandle : MonoBehaviour
         _controller = null;
     }
 
+
     void Update()
     {
         if (!_grabbed || _controller == null) return;
 
-        // === TWIST (rotation du poignet autour de l'axe) ===
-        Quaternion rotDelta = _controller.rotation * Quaternion.Inverse(_ctrlRotOnGrab);
-        rotDelta.ToAngleAxis(out float angle, out Vector3 rotAxis);
+        // Axe en world space (recalculé depuis la rotation BASE, pas la rotation courante)
+        // On utilise _objRotOnGrab * localAxis pour avoir l'axe tel qu'il était au grab
+        Vector3 worldAxisAtGrab = (_objRotOnGrab * localAxis).normalized;
 
-        // Projection du delta de rotation sur notre axe
-        float twistAmount = 0f;
-        if (angle > twistDeadzone)
-        {
-            twistAmount = angle * Vector3.Dot(rotAxis.normalized, _worldAxis);
-        }
-
-        // === SLIDE (d�placement du controller - rotation sur axe perpendiculaire) ===
+        // === SLIDE : déplacement du controller ===
         Vector3 delta = _controller.position - _ctrlPosOnGrab;
 
-        // D�composition du d�placement dans le plan perpendiculaire � l'axe
-        float slideA = Vector3.Dot(delta, _perpA); // - rotation autour de perpB
-        float slideB = Vector3.Dot(delta, _perpB); // - rotation autour de perpA
+        // On projette le déplacement sur les axes perpendiculaires à l'axe de la poignée
+        // perpA et perpB sont fixes (calculés au grab), donc pas de dérive
+        float slideA = Vector3.Dot(delta, _perpA);
+        float slideB = Vector3.Dot(delta, _perpB);
 
-        float slideAngleA = -slideA * slideSensitivity;
-        float slideAngleB =  slideB * slideSensitivity;
+        // Le déplacement perpendiculaire à l'axe génère une rotation AUTOUR de l'axe
+        // La magnitude du déplacement projeté dans le plan perp = amplitude de rotation
+        // Direction : produit vectoriel du déplacement avec l'axe
+        Vector3 projectedDelta = delta - Vector3.Dot(delta, worldAxisAtGrab) * worldAxisAtGrab;
+        float slideMagnitude = projectedDelta.magnitude;
 
-        // === COMBINAISON (depuis la rotation initiale au grab) ===
-        Quaternion qTwist  = Quaternion.AngleAxis(twistAmount * twistSensitivity, _worldAxis);
-        Quaternion qSlideA = Quaternion.AngleAxis(slideAngleA, _perpB);
-        Quaternion qSlideB = Quaternion.AngleAxis(slideAngleB, _perpA);
+        // Signe : déterminé par le produit vectoriel entre le déplacement et l'axe
+        Vector3 cross = Vector3.Cross(projectedDelta.normalized, worldAxisAtGrab);
+        float sign = Mathf.Sign(Vector3.Dot(cross, worldAxisAtGrab));
 
-        // Dans Update(), remplacer l'assignation finale :
+        float slideAngle = sign * slideMagnitude * slideSensitivity;
 
-        Quaternion rawRotation = qTwist * qSlideA * qSlideB * _objRotOnGrab;
+        // === TWIST : rotation du poignet ===
+        Quaternion rotDelta = _controller.rotation * Quaternion.Inverse(_ctrlRotOnGrab);
+        rotDelta.ToAngleAxis(out float twistAngleRaw, out Vector3 twistAxis);
 
-        // Appliquer la contrainte si le composant est présent
-        var constraint = GetComponent<SingleAxisConstraint>();
-        if (constraint != null)
-            targetObject.rotation = constraint.FilterRotation(rawRotation, _objRotOnGrab);
-        else
-            targetObject.rotation = rawRotation;
-            }
+        float twistAngle = 0f;
+        if (twistAngleRaw > twistDeadzone && twistAngleRaw < 180f)
+        {
+            twistAngle = twistAngleRaw * Vector3.Dot(twistAxis.normalized, worldAxisAtGrab);
+        }
+
+        // === ROTATION FINALE ===
+        // On applique UNE SEULE rotation autour de l'axe world figé au grab
+        int rotationDirection = reverseRotation ? -1 : 1;
+        float totalAngle = rotationDirection * (slideAngle + twistAngle * twistSensitivity);
+        Quaternion deltaRot = Quaternion.AngleAxis(totalAngle, worldAxisAtGrab);
+        targetObject.rotation = deltaRot * _objRotOnGrab;
+    }
 }
