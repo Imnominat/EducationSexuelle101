@@ -16,8 +16,9 @@ namespace Dialogs
 		[Tooltip("List of possible responses for this dialog. If empty, the dialog will be treated normally. If populated, response buttons will be displayed instead of the standard buttons.")]
 		public List<ResponseData> Responses = new List<ResponseData>();
 
-
-		/// <summary>
+	[Space]
+	[Tooltip("For each response, specify which dialog ID should be loaded next. Leave empty if no automatic progression.")]
+	public List<string> NextDialogAfterResponse = new List<string>();
 		/// Called when the button "Validate" is pressed.
 		/// </summary>
 		[Space]

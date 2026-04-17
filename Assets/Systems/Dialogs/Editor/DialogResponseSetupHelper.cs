@@ -47,7 +47,6 @@ namespace Dialogs.Editor
 			// Step 2: Setup Container
 			GUILayout.Label("Step 2: Setup Response Container", EditorStyles.miniLabel);
 			
-			var responseContainer = serializedObject?.FindProperty("m_ResponseContainer");
 			if (GUILayout.Button("Create Response Container (Panel)", GUILayout.Height(30)))
 			{
 				CreateResponseContainer();
@@ -95,19 +94,42 @@ namespace Dialogs.Editor
 			layoutElement.preferredHeight = 60;
 			layoutElement.layoutPriority = 1;
 
-			// Create text child
+			// Create text child with TextMeshProUGUI via reflection to avoid direct reference
 			GameObject textGO = new GameObject("Text");
 			textGO.transform.SetParent(buttonGO.transform);
 			textGO.transform.localPosition = Vector3.zero;
 			
+			// Try to add TextMeshProUGUI via reflection
+			System.Type tmpType = System.Type.GetType("TMPro.TextMeshProUGUI, Unity.TextMeshPro");
+			if (tmpType != null)
+			{
+				textGO.AddComponent(tmpType);
+				// Set text via reflection
+				var textProperty = tmpType.GetProperty("text");
+				if (textProperty != null)
+				{
+					var instance = textGO.GetComponent(tmpType);
+					textProperty.SetValue(instance, "Response", null);
+				}
+				
+				var alignmentProperty = tmpType.GetProperty("alignment");
+				if (alignmentProperty != null)
+				{
+					var instance = textGO.GetComponent(tmpType);
+					// TextAlignmentOptions.Center = 258
+					alignmentProperty.SetValue(instance, 258, null);
+				}
+				
+				var colorProperty = tmpType.GetProperty("color");
+				if (colorProperty != null)
+				{
+					var instance = textGO.GetComponent(tmpType);
+					colorProperty.SetValue(instance, Color.white, null);
+				}
+			}
+
 			Image textImage = textGO.AddComponent<Image>();
 			textImage.raycastTarget = false;
-			
-			TextMeshProUGUI textMPUGUI = textGO.AddComponent<TextMeshProUGUI>();
-			textMPUGUI.text = "Response";
-			textMPUGUI.fontSize = 36;
-			textMPUGUI.alignment = TextAlignmentOptions.Center;
-			textMPUGUI.color = Color.white;
 
 			// Setup RectTransform for text
 			RectTransform textRect = textGO.GetComponent<RectTransform>();
@@ -143,7 +165,7 @@ namespace Dialogs.Editor
 		private void CreateResponseContainer()
 		{
 			// Find or create a Canvas
-			Canvas canvas = FindObjectOfType<Canvas>();
+			Canvas canvas = Object.FindFirstObjectByType<Canvas>();
 			if (canvas == null)
 			{
 				EditorUtility.DisplayDialog("Error", "No Canvas found in scene. Please create a Canvas first.", "OK");
@@ -168,9 +190,8 @@ namespace Dialogs.Editor
 			// Add vertical layout group
 			VerticalLayoutGroup layoutGroup = containerGO.AddComponent<VerticalLayoutGroup>();
 			layoutGroup.childForceExpandHeight = true;
-			layoutGroup.childControlSize = true;
+			layoutGroup.childForceExpandWidth = false;
 			layoutGroup.spacing = 10;
-			layoutGroup.childScaleHeight = true;
 
 			// Assign to DialogUI if possible
 			if (targetDialogUI != null)

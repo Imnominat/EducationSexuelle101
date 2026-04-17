@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
-  m_Name: Carotte
+  m_Name: 11
   m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: car
+  DialogText: 11
   DialogAudioClip: {fileID: 0}
   DialogIcon: {fileID: 0}

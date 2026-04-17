@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
-  m_Name: Carotte
-  m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: car
-  DialogAudioClip: {fileID: 0}
-  DialogIcon: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: a9a6b0db3782ad249aac611f73e3c242, type: 3}
+  m_Name: Capotes
+  m_EditorClassIdentifier: Dialogs::Dialogs.ResponseData
+  ResponseText: cap
+  ResponseIcon: {fileID: 0}
