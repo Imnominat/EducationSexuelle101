@@ -9,11 +9,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 0de966e58926964469939bb2a51792b5
   - enabled: 1
-    path: Assets/Scenes/Anatomie.unity
+    path: Assets/Scenes/AnatomieF.unity
     guid: 7f61d363325013745a12b346c6f48237
   - enabled: 1
     path: Assets/Scenes/Vagina.unity
     guid: 0ffd67c0b531a2a4699c624b6b3fbf4d
+  - enabled: 1
+    path: Assets/Scenes/MecaniqueF.unity
+    guid: f9c7114bb09206d42ae38107a7a80248
+  - enabled: 1
+    path: Assets/Scenes/Pharmacie.unity
+    guid: 34ea14214241bd045b997beb3e291327
+  - enabled: 1
+    path: Assets/Scenes/Chambre.unity
+    guid: 0ccc29b34096dc64fbd1179be9a44128
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}
