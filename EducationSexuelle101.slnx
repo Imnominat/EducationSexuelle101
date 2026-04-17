@@ -72,6 +72,7 @@
   <Project Path="Unity.Collections.CodeGen.csproj" />
   <Project Path="Unity.XR.Management.csproj" />
   <Project Path="Unity.Mathematics.Editor.csproj" />
+  <Project Path="Dialogs.csproj" />
   <Project Path="Unity.XR.Hands.Editor.csproj" />
   <Project Path="UnityEditor.UI.Analytics.csproj" />
   <Project Path="Unity.Tutorials.Core.csproj" />
@@ -97,6 +98,7 @@
   <Project Path="Unity.RenderPipelines.Universal.Shaders.csproj" />
   <Project Path="Unity.RenderPipelines.Core.Runtime.Shared.csproj" />
   <Project Path="Unity.InternalAPIEngineBridge.004.csproj" />
+  <Project Path="Dialogs.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj" />
   <Project Path="Unity.ProBuilder.Stl.csproj" />
   <Project Path="Unity.XR.ARAnalytics.Editor.csproj" />
