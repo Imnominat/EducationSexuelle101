@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
-  m_Name: Carotte
+  m_Name: DFemme
   m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: car
+  DialogText: "Tr\xE8s bien, voici une pillule communement appel\xE9e pillule du
+    lendemain, completement gratuit et sans prescription. Je vous invite donc \xE0
+    vous rendre au laboratoire sur votre droite afin de v\xE9rifier que vous n'avez
+    pas contracter d'IST."
   DialogAudioClip: {fileID: 0}
   DialogIcon: {fileID: 0}

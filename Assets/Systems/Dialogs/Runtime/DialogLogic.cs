@@ -12,13 +12,11 @@ namespace Dialogs
 		public string ID => _id;
 		public DialogData Dialog;
 
-		[Space]
-		[Tooltip("List of possible responses for this dialog. If empty, the dialog will be treated normally. If populated, response buttons will be displayed instead of the standard buttons.")]
-		public List<ResponseData> Responses = new List<ResponseData>();
+        [Header("Responses")]
+        [Tooltip("If not empty, response buttons will be shown instead of the Validate button.")]
+        public List<Responses.ResponseData> Responses = new List<Responses.ResponseData>();
 
-	[Space]
-	[Tooltip("For each response, specify which dialog ID should be loaded next. Leave empty if no automatic progression.")]
-	public List<string> NextDialogAfterResponse = new List<string>();
+		/// <summary>
 		/// Called when the button "Validate" is pressed.
 		/// </summary>
 		[Space]
@@ -50,12 +48,6 @@ namespace Dialogs
 		[Space]
 		[Tooltip("Called whenever a dialog has finished loading (after Validate, Previous or Repeat).")]
 		public UnityEvent OnDialogLoaded;
-
-		/// <summary>
-		/// Called when a response button is selected. The response index is passed as parameter.
-		/// </summary>
-		[Space]
-		[Tooltip("Called when a response button is selected (includes response index).")]
-		public UnityEvent<int> OnResponseSelected;
+		
 	}
 }

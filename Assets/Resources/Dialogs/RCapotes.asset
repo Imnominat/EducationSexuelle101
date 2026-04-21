@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
-  m_Name: Bonjour
-  m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: Bonjour, que puis je faire pour vous aider ?
-  DialogAudioClip: {fileID: 0}
-  DialogIcon: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f41825bf27e815c46b1006b2c7c7c638, type: 3}
+  m_Name: RCapotes
+  m_EditorClassIdentifier: Dialogs::Dialogs.ResponseData
+  ResponseText: "je veux des pr\xE9servatifs"
+  ResponseAudioClip: {fileID: 0}
+  NextDialogID: Capotes

@@ -1,292 +1,203 @@
-﻿using System;
+﻿// DialogUI.cs - Version complète avec gestion des réponses
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Dialogs.Effects;
+using Responses;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Dialogs
 {
-	/// <summary>
-	/// DialogUI is a MonoBehaviour responsible for managing the dialog UI elements (text, icon, audio).
-	/// </summary>
-	public class DialogUI : MonoBehaviour
-	{
-		/// <summary>
-		/// If true, the first dialog in the Conversation list will be played automatically when the scene starts.
-		/// </summary>
-		[Tooltip("If true, the first dialog in the Conversation list will be played automatically when the scene starts.")]
-		[SerializeField] private bool m_PlayOnStart = true;
-		[SerializeField] private string startingDialog = "";
+    /// <summary>
+    /// DialogUI manages dialog UI elements (text, icon, audio) and dynamic response buttons.
+    /// </summary>
+    public class DialogUI : MonoBehaviour
+    {
+        [Tooltip("If true, the first dialog in the Conversation list will be played automatically when the scene starts.")]
+        [SerializeField] private bool m_PlayOnStart = true;
+        [SerializeField] private string startingDialog = "";
 
-		/// <summary>
-		/// List of DialogLogic that represents the conversation to be played by this DialogUI.
-		/// Each DialogLogic contains the data and events for a single dialog entry in the conversation.
-		/// </summary>
-		[Tooltip("List of Dialog that represents the conversation to be played.")]
-		public List<DialogLogic> Conversation = new List<DialogLogic>();
+        [Tooltip("List of Dialog that represents the conversation to be played.")]
+        public List<DialogLogic> Conversation = new List<DialogLogic>();
 
-		[Header("UI References")]
-		[field: SerializeField] public TMP_Text DialogLabel { get; private set; }
-		[SerializeField] private Image m_IconImage;
-		[SerializeField] private AudioSource m_AudioSource;
+        [Header("UI References")]
+        [field: SerializeField] public TMP_Text DialogLabel { get; private set; }
+        [SerializeField] private Image m_IconImage;
+        [SerializeField] private AudioSource m_AudioSource;
 
-		[Header("Response UI References")]
-		[SerializeField] private Transform m_ResponseContainer;
-		[SerializeField] private Button m_ResponseButtonPrefab;
+        [Header("Response Buttons")]
+        [Tooltip("Prefab for response buttons. Must have a ResponseButton component.")]
+        [SerializeField] private ResponseButton m_ResponseButtonPrefab;
+        [Tooltip("Parent transform where response buttons will be instantiated.")]
+        [SerializeField] private Transform m_ResponseButtonContainer;
+        [Tooltip("The Validate button — hidden when responses are available.")]
+        [SerializeField] private GameObject m_ValidateButton;
 
-		/// <summary>
-		/// The default sprite to use for the dialog icon when a dialog does not have a specific icon assigned.
-		/// </summary>
-		public Sprite DefaultIcon;
+        public Sprite DefaultIcon;
 
-		/// <summary>
-		/// List of indices corresponding to the dialogs that have been played in the current conversation.
-		/// This allows us to navigate through the conversation history (ex: Previous button).
-		/// </summary>
-		private readonly List<int> _convHistory = new List<int>();
-		/// <summary>
-		/// Index of the current dialog in the conversation history
-		/// </summary>
-		private int _convHistoryIndex = -1;
-		private List<DialogEffect> effects = new List<DialogEffect>();
-		private List<Button> _currentResponseButtons = new List<Button>();
-		public DialogLogic CurrentDialogLogic => IsValidHistoryIndex(_convHistoryIndex) ? Conversation[_convHistory[_convHistoryIndex]] : null;
+        private readonly List<int> _convHistory = new List<int>();
+        private int _convHistoryIndex = -1;
+        private List<DialogEffect> effects = new List<DialogEffect>();
 
-		/// <summary>
-		/// Checks if the given index is valid for the conversation history and that the corresponding dialog logic exists in the Conversation list.
-		/// </summary>
-		/// <param name="index">The index in the conversation history list to validate</param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private bool IsValidHistoryIndex(int index) => index >= 0 && index < _convHistory.Count && _convHistory[index] >= 0 && IsValideDialogIndex(_convHistory[index]);
-		/// <summary>
-		/// Checks if the given index is valid for the Conversation list and that the corresponding dialog logic is not null.
-		/// </summary>
-		/// <param name="index"></param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private bool IsValideDialogIndex(int index) => index >= 0 && index < Conversation.Count && Conversation[index] != null;
+        // Pool of instantiated response buttons to avoid repeated Instantiate/Destroy
+        private readonly List<ResponseButton> _responseButtonPool = new List<ResponseButton>();
 
+        public DialogLogic CurrentDialogLogic =>
+            IsValidHistoryIndex(_convHistoryIndex)
+                ? Conversation[_convHistory[_convHistoryIndex]]
+                : null;
 
-		void Start()
-		{
-			if (DefaultIcon == null && m_IconImage != null)
-			{
-				DefaultIcon = m_IconImage.sprite;
-			}
-			if (m_PlayOnStart && Conversation.Count > 0)
-			{
-				_convHistoryIndex = 0;
-				StartConversation(0);
-			}
-		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool IsValidHistoryIndex(int index) =>
+            index >= 0 && index < _convHistory.Count &&
+            _convHistory[index] >= 0 && IsValideDialogIndex(_convHistory[index]);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool IsValideDialogIndex(int index) =>
+            index >= 0 && index < Conversation.Count && Conversation[index] != null;
+
+        void Start()
+        {
+            if (DefaultIcon == null && m_IconImage != null)
+                DefaultIcon = m_IconImage.sprite;
+
+            if (m_PlayOnStart && Conversation.Count > 0)
+            {
+                _convHistoryIndex = 0;
+                StartConversation(0);
+            }
+        }
 
 #if UNITY_EDITOR
-		void OnValidate()
-		{
-			if (string.IsNullOrEmpty(startingDialog) && Conversation.Count > 0)
-			{
-				startingDialog = Conversation[0].ID;
-			}
-		}
+        void OnValidate()
+        {
+            if (string.IsNullOrEmpty(startingDialog) && Conversation.Count > 0)
+                startingDialog = Conversation[0].ID;
+        }
 #endif
 
-		/// <summary>
-		/// Pass the validation event to the current dialog logic. (ex: progressing to the next dialog ; fast-forwarding the current dialog text ; ...)
-		/// </summary>
-		public void Validate()
-		{
-			CurrentDialogLogic.OnDialogValidate.Invoke();
-		}
+        public void Validate() => CurrentDialogLogic?.OnDialogValidate.Invoke();
+        public void Cancel()   => CurrentDialogLogic?.OnDialogCancel.Invoke();
 
-		/// <summary>
-		/// Pass the cancel event to the current dialog logic. (ex: closing the dialog)
-		/// </summary>
-		public void Cancel()
-		{
-			CurrentDialogLogic.OnDialogCancel.Invoke();
-		}
+        public void Repeat()
+        {
+            CurrentDialogLogic?.OnDialogRepeat.Invoke();
+            PlayConversation(CurrentDialogLogic);
+        }
 
-		/// <summary>
-		/// Repeats the current dialog.
-		/// </summary>
-		/// <remarks>
-		/// Note: This method does not update the conversation history since we are just repeating the current dialog.
-		/// </remarks>
-		public void Repeat()
-		{
-			CurrentDialogLogic.OnDialogRepeat.Invoke();
-			PlayConversation(CurrentDialogLogic);
-		}
+        public void Previous()
+        {
+            if (_convHistoryIndex <= 0) return;
+            CurrentDialogLogic?.OnDialogPrevious.Invoke();
+            _convHistoryIndex--;
+            PlayConversation(CurrentDialogLogic);
+        }
 
-		/// <summary>
-		/// Reads the previous message in the conversation (ex: Previous dialog)
-		/// </summary>
-		public void Previous()
-		{
-			if (_convHistoryIndex <= 0)
-				return;
-			CurrentDialogLogic.OnDialogPrevious.Invoke();
-			_convHistoryIndex--;
-			PlayConversation(CurrentDialogLogic);
-		}
+        private void PlayConversation(DialogLogic dialogLogic)
+        {
+            DialogData dialogData = dialogLogic.Dialog;
 
-		/// <summary>
-		/// Plays the given dialog logic by updating the UI elements (text, icon, audio) accordingly.
-		/// </summary>
-		/// <param name="dialogLogic">The dialog logic to play</param>
-		private void PlayConversation(DialogLogic dialogLogic)
-		{
-			// cache localy the dialog data for faster access and better readability
-			DialogData dialogData = dialogLogic.Dialog;
+            DialogLabel.text = dialogData.DialogText;
 
-			// Update Text
-			DialogLabel.text = dialogData.DialogText;
+            if (m_IconImage != null)
+                m_IconImage.sprite = dialogData.DialogIcon == null ? DefaultIcon : dialogData.DialogIcon;
 
-			// Update Icon
-			if (m_IconImage != null)
-			{
-				m_IconImage.sprite = dialogData.DialogIcon == null ? DefaultIcon : dialogData.DialogIcon;
-			}
+            if (m_AudioSource != null)
+            {
+                m_AudioSource.Stop();
+                m_AudioSource.clip = dialogData.DialogAudioClip;
+                if (dialogData.DialogAudioClip != null)
+                    m_AudioSource.Play();
+            }
 
-			// Update Audio
-			if (m_AudioSource != null)
-			{
-				AudioClip audioClip = dialogData.DialogAudioClip;
-				m_AudioSource.Stop();
-				m_AudioSource.clip = audioClip;
-				if (audioClip != null)
-				{
-					m_AudioSource.Play();
-				}
-			}
+            effects.Clear();
+            GetComponents(effects);
+            foreach (var effect in effects)
+            {
+                effect.ResetEffect();
+                effect.StartEffect();
+            }
 
-			// (Re)Start Effects
-			effects.Clear();
-			GetComponents(effects);
-			foreach (var effect in effects)
-			{
-				effect.ResetEffect();
-				effect.StartEffect();
-			}
+            RefreshResponseButtons(dialogLogic);
 
-			// Handle Response Buttons
-			if (dialogLogic.Responses != null && dialogLogic.Responses.Count > 0)
-			{
-				DisplayResponseButtons(dialogLogic);
-			}
-			else
-			{
-				ClearResponseButtons();
-			}
-		}
+            dialogLogic.OnDialogLoaded.Invoke();
+        }
 
-		/// <summary>
-		/// Starts a conversation by its index in the Conversation list.
-		/// This method also updates the conversation history to allow navigation through previous dialogs.
-		/// </summary>
-		/// <param name="index">The index in the Conversation list.</param>
-		/// <exception cref="ArgumentOutOfRangeException">Happens when the index is out of range of the conversation list.</exception>
-		/// <exception cref="NullReferenceException">Happens when the DialogLogic at the given index is null.</exception>
-		private void StartConversation(int index)
-		{
-			if (index < 0 || index >= Conversation.Count)
-			{
-				throw new ArgumentOutOfRangeException(nameof(index), $"Index {index} is out of range for the conversation list of size {Conversation.Count}.");
-			}
-			DialogLogic dialogLogic = Conversation[index] ?? throw new NullReferenceException($"DialogLogic at index {index} is null.");
+        /// <summary>
+        /// Shows or hides response buttons depending on whether the current dialog has responses.
+        /// Uses a simple pool to avoid per-frame allocations.
+        /// </summary>
+        private void RefreshResponseButtons(DialogLogic dialogLogic)
+        {
+            bool hasResponses = dialogLogic.Responses != null && dialogLogic.Responses.Count > 0;
 
-			PlayConversation(dialogLogic);
+            // Show/hide the validate button
+            if (m_ValidateButton != null)
+                m_ValidateButton.SetActive(!hasResponses);
 
-			// Update conversation history
-			_convHistoryIndex = _convHistory.Count;
-			_convHistory.Add(index);
-		}
+            // Hide all pooled buttons first
+            foreach (var btn in _responseButtonPool)
+                btn.gameObject.SetActive(false);
 
-		/// <summary>
-		/// Starts a conversation by its DialogLogic reference.<br/>
-		/// </summary>
-		/// <remarks>
-		/// Note: The given DialogLogic must be part of the Conversation list, otherwise an exception will be thrown.
-		/// </remarks>
-		/// <param name="dialogLogic">The DialogLogic to play from the Conversation list.</param>
-		public void StartConversation(DialogLogic dialogLogic)
-			=> StartConversation(Conversation.IndexOf(dialogLogic));
+            if (!hasResponses || m_ResponseButtonPrefab == null || m_ResponseButtonContainer == null)
+                return;
 
-		/// <summary>
-		/// Starts a conversation by its DialogID.<br/>
-		/// </summary>
-		/// <remarks>
-		/// Note: The given DialogID must be part of the Conversation list, otherwise an exception will be thrown.
-		/// </remarks>
-		/// <param name="dialogID">The DialogID of the conversation to start. (See <see cref="DialogData.DialogID"/>)</param>
-		public void StartConversation(string dialogID)
-			=> StartConversation(Conversation.FindIndex(d => d.ID == dialogID));
+            for (int i = 0; i < dialogLogic.Responses.Count; i++)
+            {
+                ResponseData response = dialogLogic.Responses[i];
+                if (response == null) continue;
 
-		/// <summary>
-		/// Clears all the response buttons from the UI.
-		/// </summary>
-		private void ClearResponseButtons()
-		{
-			foreach (var button in _currentResponseButtons)
-			{
-				Destroy(button.gameObject);
-			}
-			_currentResponseButtons.Clear();
-		}
+                // Grow pool if needed
+                if (i >= _responseButtonPool.Count)
+                {
+                    ResponseButton newBtn = Instantiate(m_ResponseButtonPrefab, m_ResponseButtonContainer);
+                    _responseButtonPool.Add(newBtn);
+                }
 
-		/// <summary>
-		/// Displays response buttons for the given dialog logic.
-		/// Creates buttons dynamically based on the responses in the dialog logic.
-		/// </summary>
-		/// <param name="dialogLogic">The dialog logic containing the responses to display</param>
-		private void DisplayResponseButtons(DialogLogic dialogLogic)
-		{
-			// Clear previous buttons
-			ClearResponseButtons();
+                ResponseButton button = _responseButtonPool[i];
+                button.gameObject.SetActive(true);
+                button.Setup(response, OnResponseSelected);
+            }
+        }
 
-			// Return early if no container or no prefab is set
-			if (m_ResponseContainer == null || m_ResponseButtonPrefab == null)
-			{
-				Debug.LogWarning("ResponseContainer or ResponseButtonPrefab is not assigned in DialogUI. Response buttons cannot be displayed.");
-				return;
-			}
+        /// <summary>
+        /// Called when the player selects a response.
+        /// Plays the optional response audio then navigates to the next dialog.
+        /// </summary>
+        private void OnResponseSelected(ResponseData response)
+        {
+            if (m_AudioSource != null && response.ResponseAudioClip != null)
+            {
+                m_AudioSource.Stop();
+                m_AudioSource.clip = response.ResponseAudioClip;
+                m_AudioSource.Play();
+            }
 
-			// Create buttons for each response
-			for (int i = 0; i < dialogLogic.Responses.Count; i++)
-			{
-				ResponseData response = dialogLogic.Responses[i];
-				if (response == null) continue;
+            if (!string.IsNullOrEmpty(response.NextDialogID))
+                StartConversation(response.NextDialogID);
+        }
 
-				Button button = Instantiate(m_ResponseButtonPrefab, m_ResponseContainer);
-				button.gameObject.SetActive(true);
+        private void StartConversation(int index)
+        {
+            if (index < 0 || index >= Conversation.Count)
+                throw new ArgumentOutOfRangeException(nameof(index),
+                    $"Index {index} is out of range for the conversation list of size {Conversation.Count}.");
 
-				// Set button text
-				TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-				if (buttonText != null)
-				{
-					buttonText.text = response.ResponseText;
-				}
+            DialogLogic dialogLogic = Conversation[index]
+                ?? throw new NullReferenceException($"DialogLogic at index {index} is null.");
 
-				// Capture the response index in a closure
-				int responseIndex = i;
-				button.onClick.AddListener(() => OnResponseButtonClicked(responseIndex));
+            PlayConversation(dialogLogic);
 
-				_currentResponseButtons.Add(button);
-			}
-		}
+            _convHistoryIndex = _convHistory.Count;
+            _convHistory.Add(index);
+        }
 
-		/// <summary>
-		/// Handles the response button click event.
-		/// Invokes the OnResponseSelected event and any custom logic for that response.
-		/// </summary>
-		/// <param name="responseIndex">The index of the selected response</param>
-		private void OnResponseButtonClicked(int responseIndex)
-		{
-			if (CurrentDialogLogic == null || responseIndex < 0 || responseIndex >= CurrentDialogLogic.Responses.Count)
-				return;
+        public void StartConversation(DialogLogic dialogLogic)
+            => StartConversation(Conversation.IndexOf(dialogLogic));
 
-			CurrentDialogLogic.OnResponseSelected?.Invoke(responseIndex);
-		}
-	}
+        public void StartConversation(string dialogID)
+            => StartConversation(Conversation.FindIndex(d => d.ID == dialogID));
+    }
 }

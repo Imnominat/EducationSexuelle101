@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
-  m_Name: 11
+  m_Name: DAmeliorerMaSexualitee
   m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: 11
+  DialogText: "Je suis d\xE9sol\xE9, je ne suis pas en mesure de vous en d\xE9livrer,
+    mais vous devriez en parler \xE0 votre m\xE9decin.\nEn revanche je peux vous
+    proposer quelques alternatives, comme du lubrifiant, des huiles de massage pelvienne,
+    des huiles essentiels ou des comp\xE9ments  alimentaires aphrodisiaque. Je peux
+    peut \xEAtre vous conseiller sur l'achat d'un sextoy si vous le souhaitez."
   DialogAudioClip: {fileID: 0}
   DialogIcon: {fileID: 0}

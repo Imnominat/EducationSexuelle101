@@ -8,10 +8,8 @@ namespace Dialogs.Editor
 	public class DialogUIEditor : UnityEditor.Editor
 	{
 		private const string P_CONVERSATION = "Conversation";
-		private const string P_RESPONSES = "Responses";
 		private SerializedProperty list;
 		private ReorderableList reorderableList;
-		private ReorderableList responsesReorderableList;
 		private int selectedIndex = -1;
 
 		void OnEnable()
@@ -54,33 +52,6 @@ namespace Dialogs.Editor
 				{
 					var element = list.GetArrayElementAtIndex(selectedIndex);
 					EditorGUILayout.PropertyField(element, new GUIContent("Dialog Logic"), true);
-
-					// Display responses separately with better formatting
-					var responsesProperty = element.FindPropertyRelative(P_RESPONSES);
-					if (responsesProperty != null && responsesProperty.isArray)
-					{
-						EditorGUILayout.Space(10);
-						EditorGUILayout.LabelField("Responses", EditorStyles.boldLabel);
-						
-						EditorGUI.indentLevel++;
-						EditorGUILayout.PropertyField(responsesProperty, true);
-						EditorGUI.indentLevel--;
-
-						if (responsesProperty.arraySize == 0)
-						{
-							EditorGUILayout.HelpBox(
-								"No responses defined. The dialog will use standard behavior (Validate, Cancel, etc.).",
-								MessageType.Info
-							);
-						}
-						else
-						{
-							EditorGUILayout.HelpBox(
-								$"{responsesProperty.arraySize} response(s) defined. Response buttons will be displayed instead of standard buttons.",
-								MessageType.Info
-							);
-						}
-					}
 				}
 			}
 			serializedObject.ApplyModifiedProperties();

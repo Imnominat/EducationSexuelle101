@@ -1,19 +1,15 @@
+// ResponseData.cs - Modification : NextDialog devient un ID de dialog
 using UnityEngine;
-
-namespace Dialogs
+namespace Responses
 {
-	/// <summary>
-	/// ResponseData represents a possible response/answer to a dialog.
-	/// Can be linked to a DialogLogic to display response buttons during a conversation.
-	/// </summary>
-	[CreateAssetMenu(fileName = "new Response", menuName = "DialogSystem/Response", order = 2)]
-	public class ResponseData : ScriptableObject
-	{
-		[TextArea]
-		[Tooltip("The text to be displayed on the response button.")]
-		public string ResponseText;
-
-		[Tooltip("Optional icon to be displayed with the response button.")]
-		public Sprite ResponseIcon;
-	}
+    [CreateAssetMenu(fileName = "new Response", menuName = "DialogSystem/Response", order = 1)]
+    public class ResponseData : ScriptableObject
+    {
+        [TextArea]
+        [Tooltip("The text to be displayed in the response.")]
+        public string ResponseText;
+        public AudioClip ResponseAudioClip;
+        [Tooltip("The ID of the next dialog to play when this response is selected.")]
+        public string NextDialogID;
+    }
 }
