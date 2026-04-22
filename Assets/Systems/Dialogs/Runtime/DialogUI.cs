@@ -15,6 +15,10 @@ namespace Dialogs
     /// </summary>
     public class DialogUI : MonoBehaviour
     {
+        [Header("Visibility")]
+        [Tooltip("Root GameObject to show/hide (assign the UiDialog panel). If null, uses this GameObject.")]
+        [SerializeField] private GameObject m_DialogRoot;
+
         [Tooltip("If true, the first dialog in the Conversation list will be played automatically when the scene starts.")]
         [SerializeField] private bool m_PlayOnStart = true;
         [SerializeField] private string startingDialog = "";
@@ -43,7 +47,14 @@ namespace Dialogs
 
         // Pool of instantiated response buttons to avoid repeated Instantiate/Destroy
         private readonly List<ResponseButton> _responseButtonPool = new List<ResponseButton>();
-
+        public bool IsVisible
+        {
+            get
+            {
+                GameObject root = m_DialogRoot != null ? m_DialogRoot : gameObject;
+                return root.activeSelf;
+            }
+        }
         public DialogLogic CurrentDialogLogic =>
             IsValidHistoryIndex(_convHistoryIndex)
                 ? Conversation[_convHistory[_convHistoryIndex]]
@@ -60,6 +71,8 @@ namespace Dialogs
 
         void Start()
         {
+            SetVisible(false);
+
             if (DefaultIcon == null && m_IconImage != null)
                 DefaultIcon = m_IconImage.sprite;
 
@@ -199,5 +212,39 @@ namespace Dialogs
 
         public void StartConversation(string dialogID)
             => StartConversation(Conversation.FindIndex(d => d.ID == dialogID));
+
+        /// <summary>Opens the dialog UI and starts the conversation from the beginning.</summary>
+        public void Open()
+        {
+            SetVisible(true);
+            _convHistory.Clear();
+            _convHistoryIndex = -1;
+
+            string idToPlay = !string.IsNullOrEmpty(startingDialog) ? startingDialog : null;
+
+            if (idToPlay != null)
+                StartConversation(idToPlay);
+            else if (Conversation.Count > 0)
+                StartConversation(0);
+        }
+
+        /// <summary>Closes and resets the dialog UI.</summary>
+        public void Close()
+        {
+            SetVisible(false);
+            _convHistory.Clear();
+            _convHistoryIndex = -1;
+            RefreshResponseButtons(null); // cache les boutons
+        }
+
+        private void SetVisible(bool visible)
+        {
+            GameObject root = m_DialogRoot != null ? m_DialogRoot : gameObject;
+            root.SetActive(visible);
+        }
+
+    
     }
+    
+    
 }
