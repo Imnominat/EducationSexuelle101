@@ -1,44 +1,12 @@
 ﻿<Solution>
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.InteractionSimulator.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Unity.XR.Interaction.Toolkit.Analytics.Editor.csproj" />
-  <Project Path="Unity.ProBuilder.KdTree.csproj" />
-  <Project Path="Unity.XR.Management.Editor.csproj" />
-  <Project Path="Unity.ProBuilder.AddOns.Editor.csproj" />
-  <Project Path="Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.csproj" />
-  <Project Path="Unity.InputSystem.ForUI.csproj" />
-  <Project Path="Unity.XR.Interaction.Toolkit.CodeSamples.Tests.csproj" />
-  <Project Path="Unity.XR.Interaction.Toolkit.Analytics.Hooks.Editor.csproj" />
-  <Project Path="Unity.Collections.CodeGen.csproj" />
-  <Project Path="Unity.XR.Management.csproj" />
-  <Project Path="Unity.Mathematics.Editor.csproj" />
   <Project Path="Dialogs.csproj" />
-  <Project Path="Unity.XR.Hands.Editor.csproj" />
-  <Project Path="UnityEditor.UI.Analytics.csproj" />
-  <Project Path="Unity.Tutorials.Core.csproj" />
-  <Project Path="Unity.ProBuilder.AssetIdRemapUtility.csproj" />
-  <Project Path="Unity.Settings.Editor.csproj" />
-  <Project Path="Unity.InputSystem.TestFramework.csproj" />
-  <Project Path="UnityEditor.XR.LegacyInputHelpers.csproj" />
-  <Project Path="Unity.ShaderGraph.Utilities.csproj" />
-
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.Hands.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.Hands.csproj" />
   <Project Path="Unity.XR.Hands.Samples.VisualizerSample.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.InteractionSimulator.Editor.csproj" />
   <Project Path="Dialogs.Editor.csproj" />
-  <Project Path="Unity.XR.ARFoundation.InternalUtils.Editor.csproj" />
-  <Project Path="Unity.XR.OpenXR.TestTooling.csproj" />
-  <Project Path="Unity.XR.OpenXR.Features.ConformanceAutomation.csproj" />
-  <Project Path="Unity.XR.Hands.Analytics.Hooks.Editor.csproj" />
-  <Project Path="Unity.XR.OpenXR.Features.MockRuntime.csproj" />
-  <Project Path="UnityEditor.SpatialTracking.csproj" />
-  <Project Path="Unity.Rendering.LightTransport.Editor.csproj" />
-  <Project Path="Unity.Collections.Editor.csproj" />
-  <Project Path="Unity.RenderPipelines.Universal.Config.Runtime.csproj" />
-  <Project Path="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj" />
-  <Project Path="Unity.RenderPipelines.Core.ShaderLibrary.csproj" />
-  <Project Path="Unity.XR.OpenXR.Features.OculusQuestSupport.csproj" />
 </Solution>
