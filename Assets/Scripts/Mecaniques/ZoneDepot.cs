@@ -40,7 +40,7 @@ public class ZoneDepot : MonoBehaviour
         bool bonneZone = p.GetZoneCible() == typeDeLaZone;
         bool positive  = p.EstPositive();
 
-        if (positive && bonneZone)
+        if (bonneZone)
         {
             _plaquettesValidees.Add(p);
             p.OnDeposeCorrectement();
