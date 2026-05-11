@@ -111,8 +111,9 @@ public class RaycastTargeting : MonoBehaviour
             else if (raycastHit.HasValue)
             {
                 // Le ray touche un objet 3D
-                InteractableObject target = raycastHit.Value.collider
-                    .GetComponent<InteractableObject>();
+                if (raycastHit.Value.collider == null) return;
+InteractableObject target = raycastHit.Value.collider
+    .GetComponent<InteractableObject>();
 
                 if (target != null && !target.IsReported)
                 {
