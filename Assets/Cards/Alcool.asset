@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089ab4e4eecae7343bb8a9fcf1587a9e, type: 3}
+  m_Name: Alcool
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  cardText: "Vous venez de rentrer de soir\xE9e avec votre partenaire, o\xF9 vous
+    avez bu de l'alcool"
+  category: Alcool
+  level: 1
+  explanation: "La prise d'alcool peut impacter la prise de d\xE9cision. Le consentement
+    peut ne pas avoir \xE9t\xE9 pris de mani\xE8re \xE9clair\xE9 "
+  illustration: {fileID: 0}
+  cardColor: {r: 1, g: 1, b: 1, a: 1}

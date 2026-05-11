@@ -20,7 +20,7 @@ public class SelectableBlock : MonoBehaviour
 
     private bool _held;
     private bool _snapping;
-    private bool _snapped;
+    
 
     private Transform _originalParent;
 
@@ -62,7 +62,6 @@ public class SelectableBlock : MonoBehaviour
     {
         _held     = true;
         _snapping = false;
-        _snapped  = false;
 
         transform.SetParent(null, worldPositionStays: true);
     }
@@ -129,7 +128,6 @@ public class SelectableBlock : MonoBehaviour
         transform.rotation = _anchor.rotation;
         transform.SetParent(_originalParent, worldPositionStays: true);
         _snapping = false;
-        _snapped  = true;
     }
 
     void UpdateGhostVisibility()

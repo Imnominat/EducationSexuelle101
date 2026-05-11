@@ -35,7 +35,7 @@ public class Plaquette : MonoBehaviour
     private bool _fixeeAuMur   = false;
     private bool _estDeposee   = false; // true une fois correctement placée
 
-    private bool _enErreur = false;
+    // private bool _enErreur = false;
     private bool _estGrabbee = false;
 
     // ─────────────────────────────────────────
@@ -118,7 +118,7 @@ public class Plaquette : MonoBehaviour
     /// </summary>
     public void OnDeposeCorrectement()
     {
-        _enErreur       = false;
+        // _enErreur       = false;
         _estDeposee     = true;
         _rb.isKinematic = true;
         _rb.useGravity  = false;
@@ -137,7 +137,7 @@ public class Plaquette : MonoBehaviour
     /// </summary>
     public void OnErreur()
     {
-        _enErreur = true;
+        // _enErreur = true;
         SetCouleur(couleurErreur);
     }
 
@@ -146,7 +146,7 @@ public class Plaquette : MonoBehaviour
     /// </summary>
     public void ResetVisuel()
     {
-        _enErreur = false; 
+        // _enErreur = false; 
         SetCouleur(couleurNormale);
     }
 

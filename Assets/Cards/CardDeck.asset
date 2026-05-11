@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9fd95eee956b242be3d5532c610788, type: 3}
+  m_Name: CardDeck
+  m_EditorClassIdentifier: Assembly-CSharp::CardDeck
+  allCards:
+  - {fileID: 11400000, guid: c188c453a8f50434983e46fd71269410, type: 2}
+  - {fileID: 11400000, guid: 13d3697718bf003468b17ca0c0ec0122, type: 2}
+  - {fileID: 11400000, guid: 144c25224f5da7e48bdcc6ee4f8fa55a, type: 2}
+  - {fileID: 11400000, guid: d458fab4fadf9cf40a4c8841709250d7, type: 2}
+  - {fileID: 11400000, guid: 5f9538e3dc2a37c48bc950920dd5f2e8, type: 2}
+  - {fileID: 11400000, guid: 9c28210657ab4274ea46565fc751628d, type: 2}
+  - {fileID: 11400000, guid: f6d2663aecdbc2146baebd7e58445e9c, type: 2}
+  handSize: 5
