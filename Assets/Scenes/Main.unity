@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MurPorteAnatomie
       objectReference: {fileID: 0}
+    - target: {fileID: 2381087402573744668, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
+      propertyPath: m_text
+      value: Anatomie
+      objectReference: {fileID: 0}
     - target: {fileID: 6558454599220971404, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -248,6 +252,10 @@ PrefabInstance:
     - target: {fileID: 1467386702294874820, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_Name
       value: MurPorteChambre
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381087402573744668, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
+      propertyPath: m_text
+      value: Chambre
       objectReference: {fileID: 0}
     - target: {fileID: 6558454599220971404, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1492,6 +1500,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MurPorteMecanique
       objectReference: {fileID: 0}
+    - target: {fileID: 2381087402573744668, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
+      propertyPath: m_text
+      value: "M\xE9canique"
+      objectReference: {fileID: 0}
     - target: {fileID: 6558454599220971404, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -1552,6 +1564,10 @@ PrefabInstance:
     - target: {fileID: 1467386702294874820, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_Name
       value: MurPortePharmacie
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381087402573744668, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
+      propertyPath: m_text
+      value: Pharmacie
       objectReference: {fileID: 0}
     - target: {fileID: 6558454599220971404, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_LocalPosition.x
