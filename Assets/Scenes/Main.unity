@@ -249,6 +249,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1138264679834215099, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
+      propertyPath: sceneName
+      value: Chambre
+      objectReference: {fileID: 0}
     - target: {fileID: 1467386702294874820, guid: a8270d6b9bae4694592d5a29fb274ace, type: 3}
       propertyPath: m_Name
       value: MurPorteChambre
