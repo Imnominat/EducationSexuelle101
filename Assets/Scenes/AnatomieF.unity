@@ -971,8 +971,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206112787}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.049999952, z: -0.20000005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.08000004, z: -0.24000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 285427787}
   - component: {fileID: 285427786}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: SocleAnalyseur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 304256500}
   - component: {fileID: 304256499}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Ecran
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4688,7 +4688,7 @@ GameObject:
   - component: {fileID: 653482967}
   - component: {fileID: 653482966}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Analyseur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4760,7 +4760,7 @@ MonoBehaviour:
   defaultTitle: 'Instructions:'
   defaultDescription: Placez un objet dans l'Analasyeur ci-dessous pour obtenir des
     informations.
-  displayScale: 0.3
+  displayScale: 1.5
 --- !u!65 &653482968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4847,14 +4847,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653482965}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2, y: 1.25, z: 0.85}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 285427785}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &680730950
 GameObject:
   m_ObjectHideFlags: 0
@@ -5072,13 +5072,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763578515}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0.35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1, y: -0.1, z: 0.35}
+  m_LocalScale: {x: 0.4, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 304256502}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &810747618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11829,11 +11829,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2137447086}
-  - {fileID: 206112788}
   - {fileID: 1102571386}
   - {fileID: 970533897}
   - {fileID: 1571147577}
   - {fileID: 1427313673}
+  - {fileID: 206112788}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1821052193
