@@ -20,5 +20,6 @@ public enum ZoneCible
 {
     Cerveau,
     Coeur,
+    Organe,
     Poubelle
 }
