@@ -1,55 +1,66 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class AnatomyScaleManager : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Références")]
     public Transform xrRig;
-    public Transform anatomyModel;
     public Camera xrCamera;
 
-    [Header("Scale Settings")]
+    [Header("Échelle")]
     public float normalScale = 1f;
     public float microScale = 1f / 300f;
     public float transitionDuration = 3f;
 
-    [Header("Entry Point")]
-    public Transform entryPoint; // positionné à la vulve
+    [Header("Debug clavier — désactiver en prod")]
+    public bool keyboardTrigger = false;
+
+    public bool IsTransitioning => isTransitioning;
+    public bool IsMicro => isMicro;
 
     private bool isMicro = false;
+    private bool isTransitioning = false;
+
+    void Update()
+    {
+        if (!keyboardTrigger || isTransitioning) return;
+        if (Keyboard.current.eKey.wasPressedThisFrame && !isMicro) EnterMicroMode();
+        if (Keyboard.current.qKey.wasPressedThisFrame && isMicro)  ExitMicroMode();
+    }
 
     public void EnterMicroMode()
     {
-        if (!isMicro)
-            StartCoroutine(ScaleTransition(normalScale, microScale, entryPoint.position));
+        if (!isMicro && !isTransitioning)
+            StartCoroutine(Transition(normalScale, microScale));
     }
 
     public void ExitMicroMode()
     {
-        if (isMicro)
-            StartCoroutine(ScaleTransition(microScale, normalScale, entryPoint.position));
+        if (isMicro && !isTransitioning)
+            StartCoroutine(Transition(microScale, normalScale));
     }
 
-    private IEnumerator ScaleTransition(float from, float to, Vector3 pivot)
+    private IEnumerator Transition(float from, float to)
     {
+        isTransitioning = true;
         float elapsed = 0f;
-        Vector3 initialPos = xrRig.position;
-
         while (elapsed < transitionDuration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0, 1, elapsed / transitionDuration);
-
-            float currentScale = Mathf.Lerp(from, to, t);
-            xrRig.localScale = Vector3.one * currentScale;
-
-            // Garder le pivot au bon endroit
-            xrRig.position = pivot - (xrCamera.transform.position - xrRig.position);
-
+            SetScale(Mathf.Lerp(from, to, Mathf.SmoothStep(0, 1, elapsed / transitionDuration)));
             yield return null;
         }
+        SetScale(to);
+        isMicro = to < from;
+        isTransitioning = false;
+    }
 
-        xrRig.localScale = Vector3.one * to;
-        isMicro = (to == microScale);
+    // Public : appelé aussi par SplineNavigator pour le scale dynamique pendant la visite
+    public void SetScale(float scale)
+    {
+        Vector3 camBefore = xrCamera.transform.position;
+        xrRig.localScale = Vector3.one * scale;
+        xrRig.position += camBefore - xrCamera.transform.position;
     }
 }
