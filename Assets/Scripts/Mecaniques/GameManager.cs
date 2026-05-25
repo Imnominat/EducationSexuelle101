@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,7 +7,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Configuration")]
-    public int nombrePlaquettesPositives = 5; // à ajuster selon ton contenu
+    public int nombrePlaquettesPositives = 5;
+
+    [Header("Événements")]
+    public UnityEvent OnSequenceCompleteEvent;
 
     private int _plaquettesValidees = 0;
 
@@ -34,13 +38,11 @@ public class GameManager : MonoBehaviour
     public void OnMauvaisePlaquette(Plaquette p)
     {
         Debug.Log($"❌ Mauvaise plaquette : {p.data.label}");
-        // Le bargraph sera géré ici à l'étape 5
     }
 
-    // Appelé quand toutes les plaquettes positives sont placées
     void OnSequenceComplete()
     {
-        Debug.Log("🎉 Séquence complète ! Déclenchement de l'animation finale.");
-        // La séquence finale sera branchée ici à l'étape 6
+        Debug.Log("🎉 Séquence complète ! Apparition des tablettes vidéo.");
+        OnSequenceCompleteEvent?.Invoke();
     }
 }
