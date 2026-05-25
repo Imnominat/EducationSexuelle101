@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
 /// <summary>
-/// Singleton gérant la logique de jeu : compteur de bloqueurs, validation des signalements.
+/// Singleton gérant la logique de jeu : compteur de bloqueurs, résultat du tri dans les poubelles.
 /// Placer sur un GameObject vide "GameManager" dans la scène.
 /// </summary>
 public class ChambreGameManager : MonoBehaviour
@@ -12,28 +11,24 @@ public class ChambreGameManager : MonoBehaviour
     public static ChambreGameManager Instance { get; private set; }
 
     [Header("Compteur de bloqueurs")]
-    [Tooltip("Nombre total de bloqueurs dans la scène. Peut être calculé automatiquement.")]
+    [Tooltip("Nombre total de bloqueurs dans la scène. Calculé automatiquement si autoCountBlockers est vrai.")]
     public int totalBlockers = 0;
 
     [Tooltip("Activer pour compter automatiquement les bloqueurs au démarrage.")]
     public bool autoCountBlockers = true;
 
-    [Header("UI du compteur")]
+    [Header("UI")]
     [Tooltip("Texte affichant le nombre de bloqueurs restants.")]
-    public TMP_Text blockerCountText; 
+    public TMP_Text blockerCountText;
 
-    [Tooltip("Panel affiché quand tous les bloqueurs sont trouvés.")]
+    [Tooltip("Panel affiché quand tous les bloqueurs sont correctement triés.")]
     public GameObject victoryPanel;
 
     private int _remainingBlockers;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
     }
 
@@ -41,9 +36,8 @@ public class ChambreGameManager : MonoBehaviour
     {
         if (autoCountBlockers)
         {
-            InteractableObject[] allObjects = FindObjectsOfType<InteractableObject>();
             totalBlockers = 0;
-            foreach (var obj in allObjects)
+            foreach (var obj in FindObjectsOfType<InteractableObject>())
                 if (obj.isBlocker) totalBlockers++;
         }
 
@@ -54,27 +48,41 @@ public class ChambreGameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Appelé par InteractableObject.Report() lorsque le joueur signale un objet.
+    /// Appelé par TrashBin quand un objet y est déposé.
     /// </summary>
-    public void OnObjectReported(InteractableObject reportedObject)
+    public void OnObjectPlacedInBin(InteractableObject placedObject, TrashBin.BinType bin)
     {
-        if (reportedObject.isBlocker)
+        if (placedObject.IsProcessed) return;
+        placedObject.MarkAsProcessed();
+
+        Vector3 pos = placedObject.transform.position;
+
+        if (placedObject.isBlocker && bin == TrashBin.BinType.Bad)
         {
-            // Bonne réponse
+            // Bloqueur dans la bonne poubelle : bonne réponse
             _remainingBlockers--;
             UpdateCounterUI();
-            FeedbackManager.Instance.ShowCorrectFeedback(reportedObject.transform.position);
+            FeedbackManager.Instance.ShowCorrectFeedback(pos);
+            Destroy(placedObject.gameObject);
 
             if (_remainingBlockers <= 0)
                 StartCoroutine(TriggerVictory());
         }
+        else if (bin == TrashBin.BinType.Good)
+        {
+            // Poubelle good : on supprime l'objet dans tous les cas
+            if (placedObject.isBlocker)
+            {
+                // Bloqueur mal trié dans la bonne poubelle
+                FeedbackManager.Instance.ShowIncorrectFeedback(pos, placedObject.explanationText);
+            }
+            Destroy(placedObject.gameObject);
+        }
         else
         {
-            // Mauvaise réponse
-            FeedbackManager.Instance.ShowIncorrectFeedback(
-                reportedObject.transform.position,
-                reportedObject.explanationText
-            );
+            // Non-bloqueur dans la mauvaise poubelle : mauvaise réponse, l'objet reste
+            FeedbackManager.Instance.ShowIncorrectFeedback(pos, placedObject.explanationText);
+            placedObject.ResetProcessed(); // Permettre une nouvelle tentative
         }
     }
 
@@ -87,10 +95,7 @@ public class ChambreGameManager : MonoBehaviour
     private IEnumerator TriggerVictory()
     {
         yield return new WaitForSeconds(1.5f);
-
-        if (victoryPanel != null)
-            victoryPanel.SetActive(true);
-
-        Debug.Log("Tous les bloqueurs ont été identifiés !");
+        if (victoryPanel != null) victoryPanel.SetActive(true);
+        Debug.Log("Tous les bloqueurs ont été correctement triés !");
     }
 }
