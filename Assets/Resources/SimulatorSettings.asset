@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd5463ae2790df4d9d09ffa2207cb96, type: 3}
   m_Name: SimulatorSettings
   m_EditorClassIdentifier: Assembly-CSharp::SimulatorSettings
-  simulatorEnabled: 0
+  simulatorEnabled: 1
