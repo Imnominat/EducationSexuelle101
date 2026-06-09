@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using TMPro;
 
 /// <summary>
-/// Singleton gérant la logique de jeu : compteur de bloqueurs, résultat du tri dans les poubelles.
+/// Singleton gérant la logique de jeu : compteur de bloqueurs, résultat du tri dans la poubelle.
 /// Placer sur un GameObject vide "GameManager" dans la scène.
 /// </summary>
 public class ChambreGameManager : MonoBehaviour
 {
     public static ChambreGameManager Instance { get; private set; }
+
+    /// <summary>Déclenché à chaque bloqueur supprimé. (remaining, total)</summary>
+    public static event Action<int, int> OnBlockerDestroyed;
 
     [Header("Compteur de bloqueurs")]
     [Tooltip("Nombre total de bloqueurs dans la scène. Calculé automatiquement si autoCountBlockers est vrai.")]
@@ -50,39 +54,32 @@ public class ChambreGameManager : MonoBehaviour
     /// <summary>
     /// Appelé par TrashBin quand un objet y est déposé.
     /// </summary>
-    public void OnObjectPlacedInBin(InteractableObject placedObject, TrashBin.BinType bin)
+    public void OnObjectPlacedInBin(InteractableObject placedObject)
     {
         if (placedObject.IsProcessed) return;
         placedObject.MarkAsProcessed();
 
         Vector3 pos = placedObject.transform.position;
 
-        if (placedObject.isBlocker && bin == TrashBin.BinType.Bad)
+        if (placedObject.isBlocker)
         {
-            // Bloqueur dans la bonne poubelle : bonne réponse
+            // Bloqueur correctement identifié : bonne réponse, on le supprime
             _remainingBlockers--;
             UpdateCounterUI();
             FeedbackManager.Instance.ShowCorrectFeedback(pos);
+            FeedbackManager.Instance.ShowExplanation(pos, placedObject.explanationText);
             Destroy(placedObject.gameObject);
+            OnBlockerDestroyed?.Invoke(_remainingBlockers, totalBlockers);
 
             if (_remainingBlockers <= 0)
                 StartCoroutine(TriggerVictory());
         }
-        else if (bin == TrashBin.BinType.Good)
-        {
-            // Poubelle good : on supprime l'objet dans tous les cas
-            if (placedObject.isBlocker)
-            {
-                // Bloqueur mal trié dans la bonne poubelle
-                FeedbackManager.Instance.ShowIncorrectFeedback(pos, placedObject.explanationText);
-            }
-            Destroy(placedObject.gameObject);
-        }
         else
         {
-            // Non-bloqueur dans la mauvaise poubelle : mauvaise réponse, l'objet reste
+            // Non-bloqueur : mauvaise réponse, on le retéléporte à sa position d'origine
             FeedbackManager.Instance.ShowIncorrectFeedback(pos, placedObject.explanationText);
-            placedObject.ResetProcessed(); // Permettre une nouvelle tentative
+            placedObject.ResetToOrigin();
+            placedObject.ResetProcessed();
         }
     }
 

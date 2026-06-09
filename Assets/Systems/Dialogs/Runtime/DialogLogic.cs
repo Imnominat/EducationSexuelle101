@@ -10,6 +10,9 @@ namespace Dialogs
 	{
 		[SerializeField] private string _id;
 		public string ID => _id;
+
+		public DialogLogic() { }
+		public DialogLogic(string id) { _id = id; }
 		public DialogData Dialog;
 
         [Header("Responses")]

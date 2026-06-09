@@ -154,9 +154,6 @@ public class Plaquette : MonoBehaviour
     // UTILITAIRES — accesseurs pour les autres scripts
     // ─────────────────────────────────────────
 
-    /// <summary>True si c'est une plaquette positive (bonne réponse).</summary>
-    public bool EstPositive() => data != null && data.isPositive;
-
     /// <summary>Retourne la zone cible attendue (Cerveau, Coeur, Poubelle).</summary>
     public ZoneCible GetZoneCible() => data != null ? data.zoneCible : ZoneCible.Poubelle;
 

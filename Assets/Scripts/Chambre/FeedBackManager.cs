@@ -37,10 +37,17 @@ public class FeedbackManager : MonoBehaviour
     [Tooltip("Durée d'affichage du message d'explication (0 = permanent).")]
     public float explanationDisplayDuration = 6f;
 
-    [Tooltip("Hauteur au-dessus de l'objet pour afficher les feedbacks.")]
+    [Tooltip("Hauteur au-dessus de l'objet pour afficher les feedbacks (icône).")]
     public float feedbackHeightOffset = 0.8f;
 
+    [Tooltip("Hauteur au-dessus de l'objet pour afficher le panneau d'explication.")]
+    public float explanationHeightOffset = 1.6f;
+
     private Camera _mainCamera;
+
+    // Garde anti-suraffichage : un seul panneau d'explication à la fois
+    private GameObject _currentExplanationPanel;
+    private Coroutine _currentExplanationCoroutine;
 
     private void Awake()
     {
@@ -84,26 +91,42 @@ public class FeedbackManager : MonoBehaviour
             StartCoroutine(FadeAndDestroy(feedback, incorrectDisplayDuration, incorrectFadeDuration));
         }
 
-        // Afficher le panneau d'explication devant l'objet
-        if (explanationPanelPrefab != null && !string.IsNullOrEmpty(explanation))
+        ShowExplanation(objectPosition, explanation);
+    }
+
+    // ─────────────────────────────────────────────
+    // Panneau d'explication (toujours affiché)
+    // ─────────────────────────────────────────────
+    public void ShowExplanation(Vector3 objectPosition, string explanation)
+    {
+        if (explanationPanelPrefab == null || string.IsNullOrEmpty(explanation)) return;
+
+        // Détruire immédiatement le panneau précédent s'il existe
+        if (_currentExplanationCoroutine != null)
         {
-            StartCoroutine(ShowExplanationPanel(objectPosition, explanation));
+            StopCoroutine(_currentExplanationCoroutine);
+            _currentExplanationCoroutine = null;
         }
+        if (_currentExplanationPanel != null)
+        {
+            Destroy(_currentExplanationPanel);
+            _currentExplanationPanel = null;
+        }
+
+        _currentExplanationCoroutine = StartCoroutine(ShowExplanationPanel(objectPosition, explanation));
     }
 
     private IEnumerator ShowExplanationPanel(Vector3 objectPosition, string explanation)
     {
-        // Légèrement décalé vers le joueur pour être lisible
-        Vector3 spawnPos = objectPosition + Vector3.up * (feedbackHeightOffset * 0.3f);
+        Vector3 spawnPos = objectPosition + Vector3.up * explanationHeightOffset;
         GameObject panel = Instantiate(explanationPanelPrefab, spawnPos, Quaternion.identity);
+        _currentExplanationPanel = panel;
         FaceCamera(panel);
 
-        // Injecter le texte dans le prefab
         Text textComponent = panel.GetComponentInChildren<Text>();
         if (textComponent != null)
             textComponent.text = explanation;
 
-        // Aussi compatible TextMeshPro
         TMPro.TMP_Text tmpComponent = panel.GetComponentInChildren<TMPro.TMP_Text>();
         if (tmpComponent != null)
             tmpComponent.text = explanation;
@@ -111,12 +134,13 @@ public class FeedbackManager : MonoBehaviour
         if (explanationDisplayDuration > 0)
         {
             yield return new WaitForSeconds(explanationDisplayDuration);
+            if (_currentExplanationPanel == panel)
+                _currentExplanationPanel = null;
             StartCoroutine(FadeAndDestroy(panel, 0f, 0.8f));
         }
         else
         {
             yield return null;
-            // Panel permanent jusqu'à la fin de la scène
         }
     }
 
@@ -124,7 +148,6 @@ public class FeedbackManager : MonoBehaviour
     // Utilitaires
     // ─────────────────────────────────────────────
 
-    /// <summary>Oriente un GameObject face à la caméra principale.</summary>
     private void FaceCamera(GameObject go)
     {
         if (_mainCamera == null) return;
@@ -132,16 +155,13 @@ public class FeedbackManager : MonoBehaviour
         go.transform.Rotate(0, 180, 0);
     }
 
-    /// <summary>Attend 'displayDuration' puis fade le CanvasGroup sur 'fadeDuration', puis détruit.</summary>
     private IEnumerator FadeAndDestroy(GameObject go, float displayDuration, float fadeDuration)
     {
         if (go == null) yield break;
 
-        // Attente avant le fade
         if (displayDuration > 0)
             yield return new WaitForSeconds(displayDuration);
 
-        // Récupérer ou créer un CanvasGroup pour le fade
         CanvasGroup cg = go.GetComponent<CanvasGroup>();
         if (cg == null)
         {
@@ -152,7 +172,6 @@ public class FeedbackManager : MonoBehaviour
                 cg = go.AddComponent<CanvasGroup>();
         }
 
-        // Fade out
         float elapsed = 0f;
         float startAlpha = cg.alpha;
 

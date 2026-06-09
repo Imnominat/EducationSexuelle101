@@ -4,16 +4,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 /// <summary>
-/// À placer sur chaque poubelle. Détecte quand un objet grabbable y est déposé
+/// À placer sur la poubelle Bad. Détecte quand un objet grabbable y est déposé
 /// et délègue la logique à ChambreGameManager.
 /// </summary>
 public class TrashBin : MonoBehaviour
 {
-    public enum BinType { Good, Bad }
-
-    [Tooltip("Good = bonne poubelle (objets OK), Bad = mauvaise poubelle (bloqueurs).")]
-    public BinType binType;
-
     private readonly Dictionary<GameObject, XRGrabInteractable> _trackedObjects = new();
 
     private void OnTriggerEnter(Collider other)
@@ -28,14 +23,12 @@ public class TrashBin : MonoBehaviour
 
         if (grab.isSelected)
         {
-            // Objet tenu : on attend qu'il soit lâché à l'intérieur
             if (_trackedObjects.ContainsKey(grab.gameObject)) return;
             _trackedObjects[grab.gameObject] = grab;
             grab.selectExited.AddListener(OnObjectReleased);
         }
         else
         {
-            // Objet déjà lâché qui entre dans le trigger (ex: lancé)
             ProcessPlacement(obj);
         }
     }
@@ -67,6 +60,6 @@ public class TrashBin : MonoBehaviour
 
     private void ProcessPlacement(InteractableObject obj)
     {
-        ChambreGameManager.Instance.OnObjectPlacedInBin(obj, binType);
+        ChambreGameManager.Instance.OnObjectPlacedInBin(obj);
     }
 }

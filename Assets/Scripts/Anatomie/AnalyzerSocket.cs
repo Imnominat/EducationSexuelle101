@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -26,6 +27,10 @@ public class AnalyzerSocket : MonoBehaviour
     [Header("Paramètres du duplicata")]
     [Tooltip("Échelle appliquée au duplicata affiché")]
     public float displayScale = 0.3f;
+
+    [Header("Événements")]
+    [Tooltip("Déclenché quand un objet est analysé. Paramètre : ID/titre de l'objet.")]
+    public UnityEvent<string> OnObjectAnalyzed;
 
     // ── Référence interne ──────────────────────────────────────────────
     private XRSocketInteractor _socket;
@@ -67,16 +72,19 @@ public class AnalyzerSocket : MonoBehaviour
         GameObject placedObject = args.interactableObject.transform.gameObject;
         AnalysableObject data = placedObject.GetComponent<AnalysableObject>();
 
+        string objectId;
         if (data == null)
         {
-            // L'objet n'a pas de données → texte générique
             ShowText("Objet non identifié", "Cet objet ne contient aucune donnée analysable.");
+            objectId = placedObject.name;
         }
         else
         {
             ShowText(data.objectTitle, data.objectDescription);
+            objectId = string.IsNullOrEmpty(data.objectTitle) ? placedObject.name : data.objectTitle;
         }
 
+        OnObjectAnalyzed?.Invoke(objectId);
         SpawnDuplicate(placedObject);
     }
 

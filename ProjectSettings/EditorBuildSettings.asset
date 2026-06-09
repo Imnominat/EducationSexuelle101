@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Vagina.unity
     guid: 0ffd67c0b531a2a4699c624b6b3fbf4d
   - enabled: 1
-    path: Assets/Scenes/MecaniqueF.unity
+    path: Assets/Scenes/Mecanique.unity
     guid: f9c7114bb09206d42ae38107a7a80248
   - enabled: 1
     path: Assets/Scenes/Pharmacie.unity

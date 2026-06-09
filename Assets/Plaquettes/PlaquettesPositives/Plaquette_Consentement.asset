@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3732231d414477a4ea37cb6384d1418d, type: 3}
   m_Name: Plaquette_Consentement
   m_EditorClassIdentifier: Assembly-CSharp::PlaquetteData
+  id: P001
   label: "Consentement \xE9clair\xE9"
-  isPositive: 1
   zoneCible: 0
-  couleurLabel: {r: 1, g: 1, b: 1, a: 1}

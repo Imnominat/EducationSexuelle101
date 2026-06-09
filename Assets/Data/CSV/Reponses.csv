@@ -1,0 +1,4 @@
+ID,texte,audioclip,nextDialogID
+R1,"Oui, je suis d'accord",,D2
+R2,"Non, je préfère pas",,D3
+R3,"Je ne sais pas",,D4

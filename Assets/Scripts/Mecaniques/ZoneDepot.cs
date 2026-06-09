@@ -38,7 +38,6 @@ public class ZoneDepot : MonoBehaviour
         if (p.EstEnCoursDeGrab()) return; // le joueur tient encore la plaquette
 
         bool bonneZone = p.GetZoneCible() == typeDeLaZone;
-        bool positive  = p.EstPositive();
 
         if (bonneZone)
         {

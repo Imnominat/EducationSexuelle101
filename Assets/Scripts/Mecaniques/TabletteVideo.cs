@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -37,6 +38,9 @@ public class TabletteVideo : MonoBehaviour
     [Header("Apparition")]
     [SerializeField] float _dureeApparition = 0.5f;
 
+    [Header("Événements")]
+    public UnityEvent OnVideoCompleted;
+
     VideoPlayer _videoPlayer;
     RenderTexture _renderTexture;
     bool _enLecture;
@@ -48,6 +52,7 @@ public class TabletteVideo : MonoBehaviour
         _videoPlayer.clip = _clip;
         _videoPlayer.playOnAwake = false;
         _videoPlayer.isLooping = false;
+        _videoPlayer.loopPointReached += _ => OnVideoCompleted?.Invoke();
         _videoPlayer.audioOutputMode = VideoAudioOutputMode.AudioSource;
         var audio = GetComponent<AudioSource>();
         if (audio != null)

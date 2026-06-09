@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace Dialogs
 {
     /// <summary>
@@ -15,6 +16,9 @@ namespace Dialogs
     /// </summary>
     public class DialogUI : MonoBehaviour
     {
+        /// <summary>Déclenché chaque fois qu'un dialogue est affiché. Paramètre : ID du dialogue.</summary>
+        public static event Action<string> OnDialogShown;
+
         [Header("Visibility")]
         [Tooltip("Root GameObject to show/hide (assign the UiDialog panel). If null, uses this GameObject.")]
         [SerializeField] private GameObject m_DialogRoot;
@@ -22,6 +26,9 @@ namespace Dialogs
         [Tooltip("If true, the first dialog in the Conversation list will be played automatically when the scene starts.")]
         [SerializeField] private bool m_PlayOnStart = true;
         [SerializeField] private string startingDialog = "";
+
+        [Tooltip("ScriptableObject contenant la conversation (généré par import CSV). Remplace la liste inline si assigné.")]
+        [SerializeField] private ConversationData m_ConversationAsset;
 
         [Tooltip("List of Dialog that represents the conversation to be played.")]
         public List<DialogLogic> Conversation = new List<DialogLogic>();
@@ -71,6 +78,9 @@ namespace Dialogs
 
         void Start()
         {
+            if (m_ConversationAsset != null)
+                Conversation = m_ConversationAsset.Dialogs;
+
             SetVisible(false);
 
             if (DefaultIcon == null && m_IconImage != null)
@@ -136,6 +146,7 @@ namespace Dialogs
             RefreshResponseButtons(dialogLogic);
 
             dialogLogic.OnDialogLoaded.Invoke();
+            OnDialogShown?.Invoke(dialogLogic.ID);
         }
 
         /// <summary>
@@ -234,7 +245,10 @@ namespace Dialogs
             SetVisible(false);
             _convHistory.Clear();
             _convHistoryIndex = -1;
-            RefreshResponseButtons(null); // cache les boutons
+
+            if (m_ValidateButton != null) m_ValidateButton.SetActive(true);
+            foreach (var btn in _responseButtonPool)
+                btn.gameObject.SetActive(false);
         }
 
         private void SetVisible(bool visible)
