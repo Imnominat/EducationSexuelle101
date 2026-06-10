@@ -29,10 +29,10 @@ public class AnatomieProgressReporter : MonoBehaviour
         _setKey = _roomId + "_Analyzed";
 
         // Compter tous les AnalysableObject dans la scène
-        _totalAnalysables = FindObjectsOfType<AnalysableObject>().Length;
+        _totalAnalysables = FindObjectsByType<AnalysableObject>(FindObjectsSortMode.None).Length;
 
         // Écouter les sockets
-        foreach (var socket in FindObjectsOfType<AnalyzerSocket>())
+        foreach (var socket in FindObjectsByType<AnalyzerSocket>(FindObjectsSortMode.None))
             socket.OnObjectAnalyzed.AddListener(OnObjectAnalyzed);
 
         // Rafraîchir au cas où une progression existe déjà
@@ -41,7 +41,7 @@ public class AnatomieProgressReporter : MonoBehaviour
 
     void OnDestroy()
     {
-        foreach (var socket in FindObjectsOfType<AnalyzerSocket>())
+        foreach (var socket in FindObjectsByType<AnalyzerSocket>(FindObjectsSortMode.None))
             if (socket != null) socket.OnObjectAnalyzed.RemoveListener(OnObjectAnalyzed);
     }
 

@@ -41,7 +41,7 @@ public class ChambreGameManager : MonoBehaviour
         if (autoCountBlockers)
         {
             totalBlockers = 0;
-            foreach (var obj in FindObjectsOfType<InteractableObject>())
+            foreach (var obj in FindObjectsByType<InteractableObject>(FindObjectsSortMode.None))
                 if (obj.isBlocker) totalBlockers++;
         }
 

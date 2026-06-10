@@ -15,7 +15,6 @@ public class MarkVisitComplete : MonoBehaviour
         if (ProgressManager.Instance != null)
             ProgressManager.Instance.SetVisited(visitKey);
         else
-            // Fallback si ProgressManager n'existe pas encore (entrée directe dans la scène)
-            PlayerPrefs.SetInt("Visited_" + visitKey, 1);
+            Debug.LogWarning("[MarkVisitComplete] ProgressManager introuvable — lance la scène Main en premier.");
     }
 }

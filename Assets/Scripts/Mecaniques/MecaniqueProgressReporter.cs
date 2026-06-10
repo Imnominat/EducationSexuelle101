@@ -24,10 +24,6 @@ public class MecaniqueProgressReporter : MonoBehaviour
 
         if (_tablette1 != null) _tablette1.OnVideoCompleted.AddListener(OnVideoFinie);
         if (_tablette2 != null) _tablette2.OnVideoCompleted.AddListener(OnVideoFinie);
-
-        // Restaurer l'état persiste (si déjà joué)
-        int stars = ProgressManager.Instance.GetStars(RoomId.Mecanique);
-        if (stars >= 2) _videosFinies = Mathf.Max(_videosFinies, stars - 1);
     }
 
     void OnDestroy()
