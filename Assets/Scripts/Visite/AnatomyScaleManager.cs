@@ -21,6 +21,13 @@ public class AnatomyScaleManager : MonoBehaviour
 
     private bool isMicro = false;
     private bool isTransitioning = false;
+    private float normalNearClip;
+
+    void Start()
+    {
+        // Sauvegarder le nearClipPlane d'origine
+        normalNearClip = xrCamera != null ? xrCamera.nearClipPlane : 0.01f;
+    }
 
     void Update()
     {
@@ -56,11 +63,15 @@ public class AnatomyScaleManager : MonoBehaviour
         isTransitioning = false;
     }
 
-    // Public : appelé aussi par SplineNavigator pour le scale dynamique pendant la visite
     public void SetScale(float scale)
     {
         Vector3 camBefore = xrCamera.transform.position;
         xrRig.localScale = Vector3.one * scale;
         xrRig.position += camBefore - xrCamera.transform.position;
+
+        // Adapter le nearClipPlane pour éviter le clipping à l'intérieur du modèle.
+        // Le joueur est minuscule : les parois sont très proches en world-space.
+        if (xrCamera != null)
+            xrCamera.nearClipPlane = normalNearClip * scale / normalScale;
     }
 }
