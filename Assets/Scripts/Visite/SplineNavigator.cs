@@ -19,11 +19,6 @@ public class SplineNavigator : MonoBehaviour
     [Header("Scale")]
     public AnatomyScaleManager scaleManager;
 
-    [Header("Sortie")]
-    public VisitEntryTrigger entryTrigger;
-    [Tooltip("Marge de recul (en t) avant la sortie par clavier")]
-    public float exitMargin = 0.08f;
-
     [Header("Zones anatomiques")]
     public AnatomyNavigator anatomyNavigator;
 
@@ -59,32 +54,22 @@ public class SplineNavigator : MonoBehaviour
         if (!active || waypoints == null || waypoints.Length < 2
             || anatomyPivot == null || playerAnchor == null) return;
 
-        float input = 0f;
-        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)   input =  1f;
-        if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) input = -1f;
+        float rawInput = 0f;
+        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)   rawInput =  1f;
+        if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) rawInput = -1f;
+
+        // Inverser le sens si le joueur regarde vers l'arrière du chemin.
+        // Le chemin est aligné avec Vector3.forward en espace monde (transport parallèle).
+        float lookDot = Vector3.Dot(playerAnchor.forward, Vector3.forward);
+        float input = rawInput * (lookDot >= 0f ? 1f : -1f);
 
         t += input * moveSpeed * Time.deltaTime;
-
-        if (seg == 0 && t < -exitMargin)
-        {
-            t = 0f;
-            TriggerExit();
-            return;
-        }
 
         while (t >= 1f && seg < waypoints.Length - 2) { t -= 1f; seg++; }
         while (t <  0f && seg > 0)                    { t += 1f; seg--; }
         t = Mathf.Clamp01(t);
 
         UpdatePivot();
-    }
-
-    public void TriggerExit()
-    {
-        Deactivate();
-        anatomyNavigator?.ResetNavigation();
-        if (entryTrigger != null) entryTrigger.Exit();
-        else scaleManager?.ExitMicroMode();
     }
 
     void UpdatePivot()
