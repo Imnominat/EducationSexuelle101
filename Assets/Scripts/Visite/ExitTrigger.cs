@@ -13,6 +13,9 @@ public class ExitTrigger : MonoBehaviour
     [Tooltip("Tag du collider joueur à détecter.")]
     public string playerTag = "Player";
 
+    [Tooltip("Scène à charger quand le joueur appuie sur Sortir.")]
+    public string sceneToLoad = "AnatomieF";
+
     void Start()
     {
         GetComponent<Collider>().isTrigger = true;
@@ -34,6 +37,6 @@ public class ExitTrigger : MonoBehaviour
     // Appeler cette méthode depuis le bouton "Sortir" du canvas.
     public void ReloadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }

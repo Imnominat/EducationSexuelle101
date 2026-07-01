@@ -5,6 +5,10 @@ public class SceneChanger : MonoBehaviour
 {
     [SerializeField] private string sceneName = "Main";
     [SerializeField] private string playerTag = "Player";
+
+    [Tooltip("Si coché, la scène Visite démarrera directement rétrécie au début du parcours SplineAnatomy.")]
+    [SerializeField] private bool directEntry = false;
+
     private bool hasLoaded = false;
 
     // Appelé par le bouton XR
@@ -12,6 +16,8 @@ public class SceneChanger : MonoBehaviour
     {
         if (hasLoaded) return;
         hasLoaded = true;
+        if (directEntry)
+            PlayerPrefs.SetInt("VisiteDirectEntry", 1);
         SceneManager.LoadScene(sceneName);
     }
 

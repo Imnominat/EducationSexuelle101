@@ -42,6 +42,15 @@ public class AnatomyScaleManager : MonoBehaviour
             StartCoroutine(Transition(normalScale, microScale));
     }
 
+    // Passage instantané en mode micro (utilisé lors d'une entrée directe depuis AnatomieF).
+    public void EnterMicroModeInstant()
+    {
+        StopAllCoroutines();
+        SetScale(microScale);
+        isMicro = true;
+        isTransitioning = false;
+    }
+
     public void ExitMicroMode()
     {
         if (isMicro && !isTransitioning)

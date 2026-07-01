@@ -23,7 +23,26 @@ public class VisitEntryTrigger : MonoBehaviour
     private bool triggered = false;
     private float activationTime = -999f;
 
-    void Start() => GetComponent<Collider>().isTrigger = true;
+    void Start()
+    {
+        GetComponent<Collider>().isTrigger = true;
+
+        if (PlayerPrefs.GetInt("VisiteDirectEntry", 0) == 1)
+        {
+            PlayerPrefs.DeleteKey("VisiteDirectEntry");
+            StartCoroutine(DirectEntry());
+        }
+    }
+
+    // Entrée directe depuis AnatomieF : rétrécissement instantané + activation immédiate.
+    IEnumerator DirectEntry()
+    {
+        triggered = true;
+        scaleManager.EnterMicroModeInstant();
+        yield return null; // laisser un frame pour que SetScale soit appliqué
+        activationTime = Time.time;
+        splineNavigator.Activate();
+    }
 
     void OnTriggerEnter(Collider other)
     {
