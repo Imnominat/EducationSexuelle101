@@ -32,11 +32,23 @@ public class SplineNavigator : MonoBehaviour
     private Quaternion smoothedRot = Quaternion.identity;
     private bool rotInitialized = false;
 
+    // Joystick de déplacement (manette XR) : lit l'axe Y du stick, quelle que soit la main.
+    private InputAction moveAction;
+
     public bool IsActive => active;
 
     public float CurrentProgress =>
         waypoints == null || waypoints.Length < 2 ? 0f :
         (seg + t) / Mathf.Max(1, waypoints.Length - 1);
+
+    void Awake()
+    {
+        moveAction = new InputAction("VisiteMove", InputActionType.Value, "<XRController>/{Primary2DAxis}", expectedControlType: "Vector2");
+    }
+
+    void OnEnable()  => moveAction?.Enable();
+    void OnDisable() => moveAction?.Disable();
+    void OnDestroy() => moveAction?.Dispose();
 
     public void Activate()
     {
@@ -55,8 +67,20 @@ public class SplineNavigator : MonoBehaviour
             || anatomyPivot == null || playerAnchor == null) return;
 
         float rawInput = 0f;
-        if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)   rawInput =  1f;
-        if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) rawInput = -1f;
+
+        // Clavier (simulateur / éditeur) — absent sur casque autonome, d'où le null-check.
+        if (Keyboard.current != null)
+        {
+            if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)   rawInput =  1f;
+            if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) rawInput = -1f;
+        }
+
+        // Joystick manette (casque réel).
+        if (moveAction != null)
+        {
+            float stickY = moveAction.ReadValue<Vector2>().y;
+            if (Mathf.Abs(stickY) > Mathf.Abs(rawInput)) rawInput = stickY;
+        }
 
         // Inverser le sens si le joueur regarde vers l'arrière du chemin.
         // Le chemin est aligné avec Vector3.forward en espace monde (transport parallèle).
