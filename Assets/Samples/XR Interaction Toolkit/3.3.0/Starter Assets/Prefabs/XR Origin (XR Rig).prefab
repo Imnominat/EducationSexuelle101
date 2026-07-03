@@ -738,6 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930236392004951510}
   - component: {fileID: 658028464602686504}
+  - component: {fileID: 554517511352143040}
   m_Layer: 2
   m_Name: Gravity
   m_TagString: Untagged
@@ -791,6 +792,20 @@ MonoBehaviour:
   m_OnGroundedChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &554517511352143040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316853283282549446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee8f509bd8b4b6b92632308ec0699e6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  minValidHeadHeight: 0.3
+  maxWaitSeconds: 3
 --- !u!1 &1470279098769358944
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +984,7 @@ MonoBehaviour:
   m_Camera: {fileID: 1767192439}
   m_OriginBaseGameObject: {fileID: 1717954561962503725}
   m_CameraFloorOffsetObject: {fileID: 1680501586}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.36144
 --- !u!143 &6232745470614056090
 CharacterController:

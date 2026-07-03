@@ -1,55 +1,72 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public static class XRSimulatorMenu
 {
-    private const string MenuPath = "XR/Simulateur activé";
-    private const string AssetPath = "Assets/Resources/SimulatorSettings.asset";
+    [MenuItem("XR/Désactiver Simulateur (toutes les scènes)")]
+    static void DisableAll() => ApplyToAllScenes(false);
 
-    [InitializeOnLoadMethod]
-    static void Init()
+    [MenuItem("XR/Activer Simulateur (toutes les scènes)")]
+    static void EnableAll() => ApplyToAllScenes(true);
+
+    static void ApplyToAllScenes(bool enable)
     {
-        EditorApplication.delayCall += RefreshCheckmark;
-    }
+        var activeScene = EditorSceneManager.GetActiveScene();
+        string originalPath = activeScene.path;
 
-    [MenuItem(MenuPath)]
-    static void Toggle()
-    {
-        var settings = GetOrCreateSettings();
-        settings.simulatorEnabled = !settings.simulatorEnabled;
-        EditorUtility.SetDirty(settings);
-        AssetDatabase.SaveAssets();
-        RefreshCheckmark();
+        if (activeScene.isDirty)
+        {
+            if (!EditorUtility.DisplayDialog("Modifications non sauvegardées",
+                "La scène courante a des modifications non sauvegardées. Sauvegarder avant de continuer ?",
+                "Sauvegarder", "Annuler"))
+                return;
+            EditorSceneManager.SaveOpenScenes();
+        }
 
-        string state = settings.simulatorEnabled ? "ACTIVÉ" : "DÉSACTIVÉ";
-        Debug.Log($"[XR Simulator] Simulateur {state}. Rebuild nécessaire pour que la scène reflète le changement.");
-    }
+        string[] guids = AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" });
+        int simulatorsFound = 0;
+        int scenesModified = 0;
 
-    [MenuItem(MenuPath, true)]
-    static bool ToggleValidate()
-    {
-        RefreshCheckmark();
-        return true;
-    }
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+            bool sceneModified = false;
 
-    static void RefreshCheckmark()
-    {
-        var settings = Resources.Load<SimulatorSettings>("SimulatorSettings");
-        Menu.SetChecked(MenuPath, settings != null && settings.simulatorEnabled);
-    }
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                foreach (var comp in root.GetComponentsInChildren<Component>(true))
+                {
+                    if (comp == null) continue;
+                    if (comp.GetType().Name != "XRInteractionSimulator") continue;
 
-    static SimulatorSettings GetOrCreateSettings()
-    {
-        var settings = AssetDatabase.LoadAssetAtPath<SimulatorSettings>(AssetPath);
-        if (settings != null)
-            return settings;
+                    if (comp.gameObject.activeSelf != enable)
+                    {
+                        comp.gameObject.SetActive(enable);
+                        sceneModified = true;
+                    }
+                    simulatorsFound++;
+                }
+            }
 
-        settings = ScriptableObject.CreateInstance<SimulatorSettings>();
-        settings.simulatorEnabled = true;
-        System.IO.Directory.CreateDirectory("Assets/Resources");
-        AssetDatabase.CreateAsset(settings, AssetPath);
-        AssetDatabase.SaveAssets();
-        Debug.Log("[XR Simulator] SimulatorSettings.asset créé dans Assets/Resources/");
-        return settings;
+            if (sceneModified)
+            {
+                EditorSceneManager.SaveScene(scene);
+                scenesModified++;
+            }
+        }
+
+        if (!string.IsNullOrEmpty(originalPath))
+            EditorSceneManager.OpenScene(originalPath, OpenSceneMode.Single);
+
+        string action = enable ? "activé" : "désactivé";
+        if (simulatorsFound == 0)
+            EditorUtility.DisplayDialog("XR Simulator",
+                "Aucun XRInteractionSimulator trouvé dans les scènes de Assets/Scenes.\n" +
+                "Vérifiez que le composant s'appelle bien 'XRInteractionSimulator'.", "OK");
+        else
+            EditorUtility.DisplayDialog("XR Simulator",
+                $"Simulateur {action} sur {simulatorsFound} objet(s) dans {scenesModified} scène(s) modifiée(s).", "OK");
     }
 }

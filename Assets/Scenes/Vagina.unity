@@ -314,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3390,6 +3390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneChanger
   sceneName: AnatomieF
   playerTag: Player
+  directEntry: 0
 --- !u!4 &965240791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4616165200164398447, guid: b0516f162e23da742ace15ed09b3bf55, type: 3}
@@ -5858,6 +5859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExitTrigger
   exitCanvas: {fileID: 1072884217}
   playerTag: Player
+  sceneToLoad: AnatomieF
 --- !u!65 &1661364910
 BoxCollider:
   m_ObjectHideFlags: 0
