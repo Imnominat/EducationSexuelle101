@@ -3,11 +3,16 @@ using UnityEngine.InputSystem;
 
 // Les waypoints DOIVENT être enfants de anatomyPivot.
 // Le pivot se déplace autour du joueur fixe.
+// Déplacement par téléportation discrète entre waypoints marqués isTeleportStop,
+// piloté depuis l'extérieur (WaypointTeleportAim) via GetNextStopIndex/JumpTo.
 public class SplineNavigator : MonoBehaviour
 {
     [Header("Waypoints — enfants de anatomyPivot")]
     public Transform[] waypoints;
-    public float moveSpeed = 0.5f;
+
+    [Tooltip("Un booléen par waypoint (même index) : true = arrêt de téléportation valide, " +
+             "false = point utilisé uniquement pour donner sa forme à la courbe.")]
+    public bool[] isTeleportStop;
 
     [Header("Pivot du modèle anatomique")]
     public Transform anatomyPivot;
@@ -22,85 +27,74 @@ public class SplineNavigator : MonoBehaviour
     [Header("Zones anatomiques")]
     public AnatomyNavigator anatomyNavigator;
 
-    [Header("Rotation")]
-    [Tooltip("Vitesse de lissage de la rotation (deg/s environ). 5-8 recommandé.")]
-    public float rotationSmoothSpeed = 5f;
+    [Header("Debug clavier — désactiver en prod")]
+    public bool keyboardDebug = false;
 
     private int seg = 0;
-    private float t = 0f;
     private bool active = false;
     private Quaternion smoothedRot = Quaternion.identity;
     private bool rotInitialized = false;
 
-    // Joystick de déplacement (manette XR) : lit l'axe Y du stick, quelle que soit la main.
-    private InputAction moveAction;
-
     public bool IsActive => active;
+
+    public int CurrentIndex => seg;
 
     public float CurrentProgress =>
         waypoints == null || waypoints.Length < 2 ? 0f :
-        (seg + t) / Mathf.Max(1, waypoints.Length - 1);
+        seg / (float)Mathf.Max(1, waypoints.Length - 1);
 
-    void Awake()
+    void OnValidate()
     {
-        moveAction = new InputAction("VisiteMove", InputActionType.Value, "<XRController>/{Primary2DAxis}", expectedControlType: "Vector2");
+        if (waypoints == null) return;
+        if (isTeleportStop == null || isTeleportStop.Length != waypoints.Length)
+            System.Array.Resize(ref isTeleportStop, waypoints.Length);
     }
-
-    void OnEnable()  => moveAction?.Enable();
-    void OnDisable() => moveAction?.Disable();
-    void OnDestroy() => moveAction?.Dispose();
 
     public void Activate()
     {
-        seg = 0;
-        t = 0f;
         rotInitialized = false;
         active = true;
-        UpdatePivot();
+        JumpTo(0);
     }
 
     public void Deactivate() => active = false;
 
     void Update()
     {
-        if (!active || waypoints == null || waypoints.Length < 2
-            || anatomyPivot == null || playerAnchor == null) return;
+        if (!keyboardDebug || !active || Keyboard.current == null) return;
 
-        float rawInput = 0f;
-
-        // Clavier (simulateur / éditeur) — absent sur casque autonome, d'où le null-check.
-        if (Keyboard.current != null)
-        {
-            if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)   rawInput =  1f;
-            if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed) rawInput = -1f;
-        }
-
-        // Joystick manette (casque réel).
-        if (moveAction != null)
-        {
-            float stickY = moveAction.ReadValue<Vector2>().y;
-            if (Mathf.Abs(stickY) > Mathf.Abs(rawInput)) rawInput = stickY;
-        }
-
-        // Inverser le sens si le joueur regarde vers l'arrière du chemin.
-        // Le chemin est aligné avec Vector3.forward en espace monde (transport parallèle).
-        float lookDot = Vector3.Dot(playerAnchor.forward, Vector3.forward);
-        float input = rawInput * (lookDot >= 0f ? 1f : -1f);
-
-        t += input * moveSpeed * Time.deltaTime;
-
-        while (t >= 1f && seg < waypoints.Length - 2) { t -= 1f; seg++; }
-        while (t <  0f && seg > 0)                    { t += 1f; seg--; }
-        t = Mathf.Clamp01(t);
-
-        UpdatePivot();
+        if (Keyboard.current.wKey.wasPressedThisFrame || Keyboard.current.upArrowKey.wasPressedThisFrame)
+            TryJump(1);
+        if (Keyboard.current.sKey.wasPressedThisFrame || Keyboard.current.downArrowKey.wasPressedThisFrame)
+            TryJump(-1);
     }
 
-    void UpdatePivot()
+    private void TryJump(int direction)
     {
-        Vector3 localCurrent = CatmullRomPoint(seg, t);
-        Vector3 localDir     = CatmullRomTangent(seg, t).normalized;
-        if (localDir == Vector3.zero) return;
+        int target = GetNextStopIndex(seg, direction);
+        if (target >= 0) JumpTo(target);
+    }
+
+    // Cherche, à partir de fromIndex, le prochain waypoint marqué isTeleportStop
+    // dans le sens direction (+1 avant / -1 arrière). Retourne -1 si aucun.
+    public int GetNextStopIndex(int fromIndex, int direction)
+    {
+        if (waypoints == null || isTeleportStop == null) return -1;
+        for (int i = fromIndex + direction; i >= 0 && i < waypoints.Length; i += direction)
+            if (isTeleportStop[i]) return i;
+        return -1;
+    }
+
+    // Repositionne/réoriente anatomyPivot instantanément sur le waypoint index.
+    public void JumpTo(int index)
+    {
+        if (waypoints == null || waypoints.Length == 0 || anatomyPivot == null || playerAnchor == null) return;
+        index = Mathf.Clamp(index, 0, waypoints.Length - 1);
+        seg = index;
+
+        Vector3 localCurrent = CatmullRomPoint(seg, 0f);
+        Vector3 localDir = CatmullRomTangent(seg, 0f).normalized;
+        if (localDir == Vector3.zero) localDir = Vector3.forward;
 
         if (!rotInitialized)
         {
@@ -110,17 +104,11 @@ public class SplineNavigator : MonoBehaviour
         }
         else
         {
-            // Transport parallèle : correction incrémentale.
-            // On cherche de combien le modèle doit encore tourner pour aligner
-            // la tangente locale courante avec le forward monde.
-            // La correction = arc minimal de (smoothedRot * localDir) → Vector3.forward.
-            // Cet arc est borné par la courbure locale du chemin (~30° max entre
-            // deux waypoints consécutifs), jamais un saut absolu de 90-180°.
+            // Transport parallèle : même correction que l'ancien déplacement continu,
+            // appliquée en un seul saut plutôt que lissée frame par frame.
             Vector3 worldTangent = smoothedRot * localDir;
             Quaternion correction = Quaternion.FromToRotation(worldTangent, Vector3.forward);
-            Quaternion targetRot  = correction * smoothedRot;
-            smoothedRot = Quaternion.Slerp(smoothedRot, targetRot,
-                Mathf.Min(1f, Time.deltaTime * rotationSmoothSpeed));
+            smoothedRot = correction * smoothedRot;
         }
 
         anatomyPivot.SetPositionAndRotation(
@@ -167,6 +155,7 @@ public class SplineNavigator : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         if (waypoints == null || waypoints.Length < 2 || anatomyPivot == null) return;
+
         Gizmos.color = Color.cyan;
         int steps = 80;
         for (int i = 0; i < steps; i++)
@@ -179,5 +168,11 @@ public class SplineNavigator : MonoBehaviour
                 anatomyPivot.TransformPoint(CatmullRomPoint(sa, ta - sa)),
                 anatomyPivot.TransformPoint(CatmullRomPoint(sb, tb - sb)));
         }
+
+        if (isTeleportStop == null) return;
+        Gizmos.color = Color.magenta;
+        for (int i = 0; i < waypoints.Length; i++)
+            if (i < isTeleportStop.Length && isTeleportStop[i] && waypoints[i] != null)
+                Gizmos.DrawSphere(anatomyPivot.TransformPoint(waypoints[i].localPosition), 0.02f);
     }
 }

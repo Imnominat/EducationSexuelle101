@@ -12,8 +12,14 @@ EditorBuildSettings:
     path: Assets/Scenes/AnatomieF.unity
     guid: 7f61d363325013745a12b346c6f48237
   - enabled: 1
+    path: Assets/Scenes/AnatomieM.unity
+    guid: e888b19e84b8a0b41998d34b1faa1e89
+  - enabled: 1
     path: Assets/Scenes/Vagina.unity
     guid: 0ffd67c0b531a2a4699c624b6b3fbf4d
+  - enabled: 1
+    path: Assets/Scenes/Dick.unity
+    guid: c6bb46b93cd05184291828d9280bac45
   - enabled: 1
     path: Assets/Scenes/Mecanique.unity
     guid: f9c7114bb09206d42ae38107a7a80248
