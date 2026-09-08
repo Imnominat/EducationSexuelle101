@@ -3,13 +3,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class AxisHandle : MonoBehaviour
 {
-    [Header("Cible � faire tourner")]
+    [Header("Cible faire tourner")]
     public Transform targetObject;
 
-    [Header("Axe de cette poign�e (espace LOCAL de l'objet cible)")]
+    [Header("Axe de cette poignee (espace LOCAL de l'objet cible)")]
     public Vector3 localAxis = Vector3.right;
 
-    [Header("Sensibilit�s")]
+    [Header("Sensibilites")]
     public float slideSensitivity  = 150f;  // degrés/mètre de déplacement
     public float twistSensitivity  = 1.2f;  // multiplicateur du twist
 

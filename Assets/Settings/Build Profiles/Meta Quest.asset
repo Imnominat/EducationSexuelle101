@@ -190,7 +190,7 @@ MonoBehaviour:
     - line: '|   androidMaxAspectRatio: 2.4'
     - line: '|   androidMinAspectRatio: 1'
     - line: '|   applicationIdentifier:'
-    - line: '|     Android: com.DefaultCompany.VRTemplate'
+    - line: '|     Android: com.SGRL.EducationSexuelle101'
     - line: '|     Standalone: com.Default-Company.VR-Template'
     - line: '|     VisionOS: com.Default-Company.VR-Template'
     - line: '|     iPhone: com.Default-Company.VR-Template'
