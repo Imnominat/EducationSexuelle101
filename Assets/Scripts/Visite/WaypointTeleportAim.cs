@@ -24,6 +24,12 @@ public class WaypointTeleportAim : MonoBehaviour
     public LineRenderer lineRenderer;
     public Transform reticle;
 
+    [Tooltip("Largeur du trait à l'échelle normale (rig non rétréci). " +
+             "Automatiquement réduite selon l'échelle courante du rig (rayOrigin.lossyScale) " +
+             "pour rester cohérente en mode micro — le LineRenderer étant en world space, " +
+             "sa largeur n'est pas mise à l'échelle par le localScale du rig parent.")]
+    public float baseLineWidth = 0.01f;
+
     [Header("Confort (optionnel)")]
     [Tooltip("Laisser vide pour un saut instantané sans fondu.")]
     public CanvasGroup fadeCanvasGroup;
@@ -113,6 +119,14 @@ public class WaypointTeleportAim : MonoBehaviour
                 lineRenderer.positionCount = 2;
                 lineRenderer.SetPosition(0, rayOrigin.position);
                 lineRenderer.SetPosition(1, targetPos);
+
+                // useWorldSpace = true : la largeur est en unités monde absolues et n'est pas
+                // mise à l'échelle par le localScale du rig parent. On la recalcule donc nous-mêmes
+                // à partir de l'échelle courante (rétrécissement en mode micro compris).
+                float scale = rayOrigin.lossyScale.x;
+                float width = baseLineWidth * scale;
+                lineRenderer.startWidth = width;
+                lineRenderer.endWidth = width;
             }
         }
 

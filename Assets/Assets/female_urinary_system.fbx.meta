@@ -3,7 +3,42 @@ guid: 7b25d661df1223f468c696adb6f2e9c3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bladder.001
+    second: {fileID: 2100000, guid: f3c683fe323d39e4ebfd51ac80a932ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Female_External_Genitalia
+    second: {fileID: 2100000, guid: d2e10447bc774554297535e58fe43847, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Female_External_Genitalia_shiny
+    second: {fileID: 2100000, guid: a5c6881fda8e7a34fb5fc5605e8c3127, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kidney_renal_pelvis.001
+    second: {fileID: 2100000, guid: 2314713680dd78c4fad2d7d4b2a8670c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Male_Urinary_Muscles.001
+    second: {fileID: 2100000, guid: 3ac6b521dc4bc4d4e9fcf8189b1e8bfa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ovary
+    second: {fileID: 2100000, guid: 963a424ece44f72468611c64602137d0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Uterus_Cervix_Vagina
+    second: {fileID: 2100000, guid: 8f2e9810e79e1c7439da4db6cc1d6782, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
