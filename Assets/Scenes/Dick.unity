@@ -638,6 +638,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
   zoneIndex: 1
+--- !u!1 &132394916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 132394917}
+  - component: {fileID: 132394918}
+  m_Layer: 0
+  m_Name: ZoneTriggerSpermaticFascia
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &132394917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132394916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12278779, y: 0.12278779, z: 0.6963643, w: 0.6963643}
+  m_LocalPosition: {x: 0.11884, y: 0.221, z: 0.25526}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582682310}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 90}
+--- !u!114 &132394918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132394916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9ec950787979d44b53a4b1530e1e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
+  zoneIndex: 1
 --- !u!1 &175335994
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,7 +961,7 @@ GameObject:
   - component: {fileID: 242365136}
   - component: {fileID: 242365137}
   m_Layer: 0
-  m_Name: WayPoint1 (23)
+  m_Name: WayPoint24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -961,7 +1006,7 @@ GameObject:
   - component: {fileID: 285492653}
   - component: {fileID: 285492654}
   m_Layer: 0
-  m_Name: WayPoint1 (18)
+  m_Name: WayPoint19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1028,7 +1073,7 @@ GameObject:
   - component: {fileID: 369073186}
   - component: {fileID: 369073187}
   m_Layer: 0
-  m_Name: WayPoint1 (27)
+  m_Name: WayPoint28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,7 +1140,7 @@ GameObject:
   - component: {fileID: 406664711}
   - component: {fileID: 406664712}
   m_Layer: 0
-  m_Name: WayPoint1 (16)
+  m_Name: ZoneTriggerCanalEjaculateur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,11 +1174,101 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
   zoneIndex: 1
+--- !u!1 &411080270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411080271}
+  - component: {fileID: 411080272}
+  m_Layer: 0
+  m_Name: ZoneTriggerTesticule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &411080271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411080270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12278779, y: 0.12278779, z: 0.6963643, w: 0.6963643}
+  m_LocalPosition: {x: 0.0914, y: -0.08256, z: 0.2611}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582682310}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 90}
+--- !u!114 &411080272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411080270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9ec950787979d44b53a4b1530e1e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
+  zoneIndex: 1
 --- !u!4 &435236855 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1767192434, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
   m_PrefabInstance: {fileID: 1461881240}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &457898085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 457898086}
+  - component: {fileID: 457898087}
+  m_Layer: 0
+  m_Name: WayPoint1 (36)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &457898086
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457898085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12278779, y: 0.12278779, z: 0.6963643, w: 0.6963643}
+  m_LocalPosition: {x: 0.08867, y: -0.03102, z: 0.34063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582682310}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 90}
+--- !u!114 &457898087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457898085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9ec950787979d44b53a4b1530e1e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
+  zoneIndex: 1
 --- !u!64 &501875793
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1242,7 +1377,7 @@ GameObject:
   - component: {fileID: 528195887}
   - component: {fileID: 528195888}
   m_Layer: 0
-  m_Name: WayPoint1 (9)
+  m_Name: WayPoint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1287,7 +1422,7 @@ GameObject:
   - component: {fileID: 529705038}
   - component: {fileID: 529705039}
   m_Layer: 0
-  m_Name: WayPoint1 (14)
+  m_Name: WayPoint15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1332,7 +1467,7 @@ GameObject:
   - component: {fileID: 537149686}
   - component: {fileID: 537149687}
   m_Layer: 0
-  m_Name: WayPoint1 (6)
+  m_Name: WayPoint7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1422,7 +1557,7 @@ GameObject:
   - component: {fileID: 554000454}
   - component: {fileID: 554000455}
   m_Layer: 0
-  m_Name: WayPoint1 (2)
+  m_Name: WayPoin3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1648,7 +1783,7 @@ GameObject:
   - component: {fileID: 587505465}
   - component: {fileID: 587505466}
   m_Layer: 0
-  m_Name: WayPoint1 (3)
+  m_Name: ZoneTriggerCorpsSpongieux
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1952,7 +2087,7 @@ GameObject:
   - component: {fileID: 628754741}
   - component: {fileID: 628754742}
   m_Layer: 0
-  m_Name: WayPoint1 (21)
+  m_Name: WayPoint22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2198,6 +2333,18 @@ PrefabInstance:
     - target: {fileID: -7154285527446791277, guid: 55fd3314f9b6d4048895ceee29ab739e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4762488367376864296, guid: 55fd3314f9b6d4048895ceee29ab739e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: -4762488367376864296, guid: 55fd3314f9b6d4048895ceee29ab739e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0033
+      objectReference: {fileID: 0}
+    - target: {fileID: -4762488367376864296, guid: 55fd3314f9b6d4048895ceee29ab739e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1046
       objectReference: {fileID: 0}
     - target: {fileID: -3834823494862768124, guid: 55fd3314f9b6d4048895ceee29ab739e, type: 3}
       propertyPath: m_IsActive
@@ -2570,6 +2717,51 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &731477035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 731477036}
+  - component: {fileID: 731477037}
+  m_Layer: 0
+  m_Name: ZoneTriggerEpididymis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &731477036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731477035}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12278779, y: 0.12278779, z: 0.6963643, w: 0.6963643}
+  m_LocalPosition: {x: 0.08867, y: -0.03102, z: 0.34063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582682310}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 90}
+--- !u!114 &731477037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731477035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9ec950787979d44b53a4b1530e1e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
+  zoneIndex: 1
 --- !u!43 &754905351
 Mesh:
   m_ObjectHideFlags: 0
@@ -2790,7 +2982,7 @@ GameObject:
   - component: {fileID: 840880880}
   - component: {fileID: 840880881}
   m_Layer: 0
-  m_Name: WayPoint1 (4)
+  m_Name: WayPoint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2921,6 +3113,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859309705}
   m_CullTransparentMesh: 1
+--- !u!1 &873698590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873698591}
+  - component: {fileID: 873698592}
+  m_Layer: 0
+  m_Name: WayPoint1 (37)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &873698591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873698590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.12278779, y: 0.12278779, z: 0.6963643, w: 0.6963643}
+  m_LocalPosition: {x: 0.10595, y: -0.09372, z: 0.30587}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582682310}
+  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 90}
+--- !u!114 &873698592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873698590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9ec950787979d44b53a4b1530e1e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZoneTrigger
+  zoneIndex: 1
 --- !u!1 &929714731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +3169,7 @@ GameObject:
   - component: {fileID: 929714732}
   - component: {fileID: 929714733}
   m_Layer: 0
-  m_Name: WayPoint1 (12)
+  m_Name: WayPoint13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3677,26 +3914,46 @@ MonoBehaviour:
   waypoints:
   - {fileID: 1027473227}
   - {fileID: 1736251714}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  isTeleportStop: 000000000000000000000000000000000000000000
+  - {fileID: 1691144153}
+  - {fileID: 554000454}
+  - {fileID: 587505465}
+  - {fileID: 840880880}
+  - {fileID: 1647634187}
+  - {fileID: 537149686}
+  - {fileID: 1518952533}
+  - {fileID: 2053456865}
+  - {fileID: 528195887}
+  - {fileID: 1863494845}
+  - {fileID: 1699258521}
+  - {fileID: 929714732}
+  - {fileID: 1175900650}
+  - {fileID: 529705038}
+  - {fileID: 1683408075}
+  - {fileID: 406664711}
+  - {fileID: 1682099474}
+  - {fileID: 285492653}
+  - {fileID: 1894411155}
+  - {fileID: 1863440630}
+  - {fileID: 628754741}
+  - {fileID: 2071158685}
+  - {fileID: 242365136}
+  - {fileID: 1736815755}
+  - {fileID: 1352785625}
+  - {fileID: 1886429334}
+  - {fileID: 369073186}
+  - {fileID: 1640684342}
+  - {fileID: 2088468819}
+  - {fileID: 537439328}
+  - {fileID: 1976578600}
+  - {fileID: 1042575634}
+  - {fileID: 110839451}
+  - {fileID: 1310946768}
+  - {fileID: 132394917}
+  - {fileID: 457898086}
+  - {fileID: 873698591}
+  - {fileID: 731477036}
+  - {fileID: 411080271}
+  isTeleportStop: 0100000000000000000000000000000000000000000000000000000000000000000000000100000101
   anatomyPivot: {fileID: 1212229056}
   playerAnchor: {fileID: 435236855}
   scaleManager: {fileID: 1461881244}
@@ -3728,7 +3985,7 @@ GameObject:
   - component: {fileID: 1027473227}
   - component: {fileID: 1027473228}
   m_Layer: 0
-  m_Name: ZoneTriggerVulves
+  m_Name: ZoneTriggerGland
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4451,7 +4708,7 @@ GameObject:
   - component: {fileID: 1175900650}
   - component: {fileID: 1175900651}
   m_Layer: 0
-  m_Name: WayPoint1 (13)
+  m_Name: WayPoint14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5227,7 +5484,7 @@ GameObject:
   - component: {fileID: 1352785625}
   - component: {fileID: 1352785626}
   m_Layer: 0
-  m_Name: WayPoint1 (25)
+  m_Name: WayPoint26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5701,7 +5958,7 @@ GameObject:
   - component: {fileID: 1518952533}
   - component: {fileID: 1518952534}
   m_Layer: 0
-  m_Name: WayPoint1 (7)
+  m_Name: Waypoint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5964,6 +6221,11 @@ Transform:
   - {fileID: 1042575634}
   - {fileID: 110839451}
   - {fileID: 1310946768}
+  - {fileID: 132394917}
+  - {fileID: 457898086}
+  - {fileID: 873698591}
+  - {fileID: 731477036}
+  - {fileID: 411080271}
   m_Father: {fileID: 1212229056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1588380301
@@ -6035,7 +6297,7 @@ GameObject:
   - component: {fileID: 1640684342}
   - component: {fileID: 1640684343}
   m_Layer: 0
-  m_Name: WayPoint1 (28)
+  m_Name: ZoneTriggerCanalDeferent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6111,7 +6373,7 @@ GameObject:
   - component: {fileID: 1647634187}
   - component: {fileID: 1647634188}
   m_Layer: 0
-  m_Name: WayPoint1 (5)
+  m_Name: WayPoint6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6268,7 +6530,7 @@ GameObject:
   - component: {fileID: 1682099474}
   - component: {fileID: 1682099475}
   m_Layer: 0
-  m_Name: WayPoint1 (17)
+  m_Name: WayPoint18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6313,7 +6575,7 @@ GameObject:
   - component: {fileID: 1683408075}
   - component: {fileID: 1683408076}
   m_Layer: 0
-  m_Name: WayPoint1 (15)
+  m_Name: ZoneTriggerProstate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6358,7 +6620,7 @@ GameObject:
   - component: {fileID: 1691144153}
   - component: {fileID: 1691144154}
   m_Layer: 0
-  m_Name: WayPoint1 (1)
+  m_Name: ZoneTriggerUretre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6403,7 +6665,7 @@ GameObject:
   - component: {fileID: 1699258521}
   - component: {fileID: 1699258522}
   m_Layer: 0
-  m_Name: WayPoint1 (11)
+  m_Name: WayPoint12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6493,7 +6755,7 @@ GameObject:
   - component: {fileID: 1736815755}
   - component: {fileID: 1736815756}
   m_Layer: 0
-  m_Name: WayPoint1 (24)
+  m_Name: WayPoint25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7092,7 +7354,7 @@ GameObject:
   - component: {fileID: 1863440630}
   - component: {fileID: 1863440631}
   m_Layer: 0
-  m_Name: WayPoint1 (20)
+  m_Name: WayPoint21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7137,7 +7399,7 @@ GameObject:
   - component: {fileID: 1863494845}
   - component: {fileID: 1863494846}
   m_Layer: 0
-  m_Name: WayPoint1 (10)
+  m_Name: WayPoint11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7182,7 +7444,7 @@ GameObject:
   - component: {fileID: 1886429334}
   - component: {fileID: 1886429335}
   m_Layer: 0
-  m_Name: WayPoint1 (26)
+  m_Name: WayPoint27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7227,7 +7489,7 @@ GameObject:
   - component: {fileID: 1894411155}
   - component: {fileID: 1894411156}
   m_Layer: 0
-  m_Name: WayPoint1 (19)
+  m_Name: WayPoint20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7877,7 +8139,7 @@ GameObject:
   - component: {fileID: 2053456865}
   - component: {fileID: 2053456866}
   m_Layer: 0
-  m_Name: WayPoint1 (8)
+  m_Name: WayPoint9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8046,7 +8308,7 @@ GameObject:
   - component: {fileID: 2071158685}
   - component: {fileID: 2071158686}
   m_Layer: 0
-  m_Name: WayPoint1 (22)
+  m_Name: WayPoint23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
