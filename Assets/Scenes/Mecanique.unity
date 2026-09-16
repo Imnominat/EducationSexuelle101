@@ -2504,7 +2504,7 @@ MonoBehaviour:
   espacementX: 1
   espacementY: 0.28
   colonnes: 4
-  couleurValidee: {r: 0, g: 1, b: 0, a: 1}
+  couleurValidee: {r: 1, g: 0.068686426, b: 0, a: 1}
 --- !u!4 &655984885
 Transform:
   m_ObjectHideFlags: 0
@@ -2859,7 +2859,7 @@ Transform:
   m_GameObject: {fileID: 801655303}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.11325973, z: -0, w: 0.99356544}
-  m_LocalPosition: {x: 0.43600664, y: -0.62800014, z: 0.06222169}
+  m_LocalPosition: {x: 0.503, y: -0.62800014, z: 0.169}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
