@@ -43,7 +43,7 @@ namespace Dialogs
         [SerializeField] private ResponseButton m_ResponseButtonPrefab;
         [Tooltip("Parent transform where response buttons will be instantiated.")]
         [SerializeField] private Transform m_ResponseButtonContainer;
-        [Tooltip("The Validate button — hidden when responses are available.")]
+        [Tooltip("The Validate button — no longer used, kept disabled at all times.")]
         [SerializeField] private GameObject m_ValidateButton;
 
         public Sprite DefaultIcon;
@@ -83,14 +83,14 @@ namespace Dialogs
 
             SetVisible(false);
 
+            if (m_ValidateButton != null)
+                m_ValidateButton.SetActive(false);
+
             if (DefaultIcon == null && m_IconImage != null)
                 DefaultIcon = m_IconImage.sprite;
 
             if (m_PlayOnStart && Conversation.Count > 0)
-            {
-                _convHistoryIndex = 0;
                 StartConversation(0);
-            }
         }
 
 #if UNITY_EDITOR
@@ -101,8 +101,16 @@ namespace Dialogs
         }
 #endif
 
+        /// <summary>Déclenché lorsque le dialogue se ferme (Cancel, fermeture externe, etc.).</summary>
+        public event Action OnClosed;
+
         public void Validate() => CurrentDialogLogic?.OnDialogValidate.Invoke();
-        public void Cancel()   => CurrentDialogLogic?.OnDialogCancel.Invoke();
+
+        public void Cancel()
+        {
+            CurrentDialogLogic?.OnDialogCancel.Invoke();
+            Close();
+        }
 
         public void Repeat()
         {
@@ -157,10 +165,6 @@ namespace Dialogs
         {
             bool hasResponses = dialogLogic.Responses != null && dialogLogic.Responses.Count > 0;
 
-            // Show/hide the validate button
-            if (m_ValidateButton != null)
-                m_ValidateButton.SetActive(!hasResponses);
-
             // Hide all pooled buttons first
             foreach (var btn in _responseButtonPool)
                 btn.gameObject.SetActive(false);
@@ -214,8 +218,14 @@ namespace Dialogs
 
             PlayConversation(dialogLogic);
 
-            _convHistoryIndex = _convHistory.Count;
+            // If we navigated back with Previous, a new branch (ex: response choice)
+            // must overwrite the stale forward history instead of being appended after it.
+            int nextHistoryPos = _convHistoryIndex + 1;
+            if (nextHistoryPos < _convHistory.Count)
+                _convHistory.RemoveRange(nextHistoryPos, _convHistory.Count - nextHistoryPos);
+
             _convHistory.Add(index);
+            _convHistoryIndex = _convHistory.Count - 1;
         }
 
         public void StartConversation(DialogLogic dialogLogic)
@@ -246,9 +256,10 @@ namespace Dialogs
             _convHistory.Clear();
             _convHistoryIndex = -1;
 
-            if (m_ValidateButton != null) m_ValidateButton.SetActive(true);
             foreach (var btn in _responseButtonPool)
                 btn.gameObject.SetActive(false);
+
+            OnClosed?.Invoke();
         }
 
         private void SetVisible(bool visible)

@@ -21,6 +21,20 @@ namespace Dialogs
 
         public bool IsOpen => m_DialogUI != null && m_DialogUI.IsVisible;
 
+        private void OnEnable()
+        {
+            if (m_DialogUI != null)
+                m_DialogUI.OnClosed += HandleDialogClosed;
+        }
+
+        private void OnDisable()
+        {
+            if (m_DialogUI != null)
+                m_DialogUI.OnClosed -= HandleDialogClosed;
+        }
+
+        private void HandleDialogClosed() => OnDialogClosed.Invoke();
+
         /// <summary>
         /// Call this from your VR interaction system (raycaster, hand, etc.)
         /// </summary>
@@ -31,7 +45,6 @@ namespace Dialogs
             if (m_ToggleOnReinteract && IsOpen)
             {
                 m_DialogUI.Close();
-                OnDialogClosed.Invoke();
             }
             else
             {
@@ -45,7 +58,6 @@ namespace Dialogs
         {
             if (m_DialogUI == null) return;
             m_DialogUI.Close();
-            OnDialogClosed.Invoke();
         }
     }
 }

@@ -1,7 +1,10 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 /// <summary>
 /// Singleton gérant la logique de jeu : compteur de bloqueurs, résultat du tri dans la poubelle.
@@ -80,6 +83,27 @@ public class ChambreGameManager : MonoBehaviour
             FeedbackManager.Instance.ShowIncorrectFeedback(pos, placedObject.explanationText);
             placedObject.ResetToOrigin();
             placedObject.ResetProcessed();
+        }
+    }
+
+    /// <summary>
+    /// Appelé par le bouton de réinitialisation. Renvoie tous les objets interactables
+    /// encore présents dans la scène (non détruits) à leur position d'origine.
+    /// </summary>
+    public void ResetAllInteractables()
+    {
+        foreach (var obj in FindObjectsByType<InteractableObject>(FindObjectsSortMode.None))
+        {
+            XRGrabInteractable grab = obj.GetComponent<XRGrabInteractable>();
+            if (grab != null && grab.isSelected)
+            {
+                var interactorsCopy = new List<IXRSelectInteractor>(grab.interactorsSelecting);
+                foreach (var interactor in interactorsCopy)
+                    grab.interactionManager.SelectExit(interactor, grab);
+            }
+
+            obj.ResetProcessed();
+            obj.ResetToOrigin();
         }
     }
 

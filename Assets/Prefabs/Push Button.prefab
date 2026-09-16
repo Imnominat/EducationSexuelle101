@@ -247,7 +247,6 @@ GameObject:
   - component: {fileID: 5419331889293473514}
   - component: {fileID: 2043066480405472099}
   - component: {fileID: 377291013443947822}
-  - component: {fileID: 7886516606741231054}
   - component: {fileID: 2201010080009185629}
   m_Layer: 0
   m_Name: Push Button
@@ -322,7 +321,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7886516606741231054}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MiniGameEnd, Assembly-CSharp
         m_MethodName: OnAnswer
         m_Mode: 6
@@ -401,33 +400,6 @@ MonoBehaviour:
   m_ClampToMaxDistance: 1
   m_MaxDistance: 0.045
   m_PokeFilter: {fileID: 2043066480405472099}
---- !u!114 &7886516606741231054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4922582553321831162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b657078490f2f34ab3fac13b4bb4746, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionType: 0
-  Question: {fileID: 0}
-  messageQuestionTMP: {fileID: 0}
-  messageDuration: 2
-  scoreTMP: {fileID: 0}
-  audioSource: {fileID: 0}
-  successSound: {fileID: 8300000, guid: 621fe0a591f06eb489cc4c83fb8c133d, type: 3}
-  failureSound: {fileID: 8300000, guid: 96fe29dd4f3169949ab02c5ccbcd5af4, type: 3}
-  voiceClip: {fileID: 0}
-  Buzzers: {fileID: 0}
-  door: {fileID: 0}
-  doorDelay: 0
-  pokeDistance: 0.02
-  pokeSpeed: 5
-  questionID: 
 --- !u!114 &2201010080009185629
 MonoBehaviour:
   m_ObjectHideFlags: 0
