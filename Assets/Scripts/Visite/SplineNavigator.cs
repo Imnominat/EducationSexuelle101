@@ -85,6 +85,17 @@ public class SplineNavigator : MonoBehaviour
         return -1;
     }
 
+    // Téléportation directe vers le waypoint d'une zone (menu UI). Retourne false si le
+    // transform donné n'appartient pas au tableau waypoints.
+    public bool JumpToWaypoint(Transform wp)
+    {
+        if (waypoints == null || wp == null) return false;
+        int index = System.Array.IndexOf(waypoints, wp);
+        if (index < 0) return false;
+        JumpTo(index);
+        return true;
+    }
+
     // Repositionne/réoriente anatomyPivot instantanément sur le waypoint index.
     public void JumpTo(int index)
     {

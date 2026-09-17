@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 6215290372334931855}
   m_Layer: 2
   m_Name: XR Origin (XR Rig)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1008,7 +1008,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.36144
+  m_Height: 1.85
   m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.5

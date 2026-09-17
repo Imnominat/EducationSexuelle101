@@ -35,6 +35,11 @@ public class AnatomyNavigator : MonoBehaviour
     private int currentZoneIndex = -1;
     private readonly List<GameObject> activePanels = new();
 
+    public int CurrentZoneIndex => currentZoneIndex;
+
+    /// Déclenché quand la zone active change (ActivateZoneByIndex ou ResetNavigation).
+    public event System.Action<int> OnZoneChanged;
+
     void Update()
     {
         if (playerHead == null) return;
@@ -101,6 +106,8 @@ public class AnatomyNavigator : MonoBehaviour
 
         if (audioSource != null && zone.narration != null)
             audioSource.PlayOneShot(zone.narration);
+
+        OnZoneChanged?.Invoke(currentZoneIndex);
     }
 
     public void ResetNavigation()
@@ -110,6 +117,7 @@ public class AnatomyNavigator : MonoBehaviour
 
         currentZoneIndex = -1;
         activePanels.Clear();
+        OnZoneChanged?.Invoke(currentZoneIndex);
     }
 
     private void DeactivateZone(AnatomyZone zone)
