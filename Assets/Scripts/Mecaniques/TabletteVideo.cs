@@ -27,6 +27,10 @@ public class TabletteVideo : MonoBehaviour
     [SerializeField] Renderer _ecranRenderer;
     [SerializeField] int _rtLargeur = 1920;
     [SerializeField] int _rtHauteur = 1080;
+    [Tooltip("À activer/désactiver si l'image apparaît inversée verticalement (haut/bas).")]
+    [SerializeField] bool _inverserVertical = true;
+    [Tooltip("À activer/désactiver si l'image apparaît inversée horizontalement (miroir).")]
+    [SerializeField] bool _inverserHorizontal = false;
 
     [Header("Contrôles UI")]
     [SerializeField] Slider _sliderProgression;
@@ -66,10 +70,10 @@ public class TabletteVideo : MonoBehaviour
         {
             var mat = new Material(Shader.Find("Unlit/Texture"));
             mat.mainTexture = _renderTexture;
-            // Le VideoPlayer écrit avec l'origine en bas-gauche ;
-            // on inverse l'axe V pour remettre l'image à l'endroit.
-            mat.mainTextureScale  = new Vector2(1f, -1f);
-            mat.mainTextureOffset = new Vector2(0f,  1f);
+            float scaleX = _inverserHorizontal ? -1f : 1f;
+            float scaleY = _inverserVertical   ? -1f : 1f;
+            mat.mainTextureScale  = new Vector2(scaleX, scaleY);
+            mat.mainTextureOffset = new Vector2(_inverserHorizontal ? 1f : 0f, _inverserVertical ? 1f : 0f);
             _ecranRenderer.material = mat;
         }
     }
