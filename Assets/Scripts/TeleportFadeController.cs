@@ -23,8 +23,7 @@ public class TeleportFadeController : MonoBehaviour
         foreach (var provider in teleportationProviders)
         {
             if (provider == null) continue;
-            provider.locomotionStarted += OnLocomotionStarted;
-            provider.locomotionEnded += OnLocomotionEnded;
+            provider.locomotionStateChanged += OnLocomotionStateChanged;
 
             if (provider is TeleportationProvider teleportationProvider)
                 teleportationProvider.delayTime = Mathf.Max(teleportationProvider.delayTime, fadeOutDuration);
@@ -36,12 +35,25 @@ public class TeleportFadeController : MonoBehaviour
         foreach (var provider in teleportationProviders)
         {
             if (provider == null) continue;
-            provider.locomotionStarted -= OnLocomotionStarted;
-            provider.locomotionEnded -= OnLocomotionEnded;
+            provider.locomotionStateChanged -= OnLocomotionStateChanged;
         }
     }
 
-    private void OnLocomotionStarted(LocomotionProvider provider) => ScreenFader.Instance?.FadeOut(fadeOutDuration);
-
-    private void OnLocomotionEnded(LocomotionProvider provider) => ScreenFader.Instance?.FadeIn(fadeInDuration);
+    // locomotionStarted/locomotionEnded ne se déclenchent qu'à l'entrée dans l'état Moving,
+    // c'est-à-dire une fois le délai (Delay Time) déjà écoulé : le fondu et le saut arrivaient
+    // donc quasi simultanément et l'écran ne noircissait jamais avant le déplacement. On écoute
+    // plutôt locomotionStateChanged pour déclencher le fondu dès l'état Preparing (début du
+    // délai), et le fondu inverse à l'état Ended (juste après le déplacement réel).
+    private void OnLocomotionStateChanged(LocomotionProvider provider, LocomotionState state)
+    {
+        switch (state)
+        {
+            case LocomotionState.Preparing:
+                ScreenFader.Instance?.FadeOut(fadeOutDuration);
+                break;
+            case LocomotionState.Ended:
+                ScreenFader.Instance?.FadeIn(fadeInDuration);
+                break;
+        }
+    }
 }
