@@ -8519,6 +8519,7 @@ MonoBehaviour:
   sceneName: Dick
   playerTag: Player
   directEntry: 1
+  fadeOutDuration: 0.3
 --- !u!4 &817692245 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4616165200164398447, guid: b0516f162e23da742ace15ed09b3bf55, type: 3}
@@ -13998,6 +13999,7 @@ MonoBehaviour:
   sceneName: Main
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &1368492021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20017,7 +20019,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1967466938}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 017f6eec818b2d54e92193e30a1357af, type: 3}
   m_Name: 
@@ -20464,6 +20466,10 @@ PrefabInstance:
     - target: {fileID: 5118296935437441048, guid: 19d15ccf6d2fa41408fe4d46aebb2ad9, type: 3}
       propertyPath: m_Name
       value: Stars
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118296935437441048, guid: 19d15ccf6d2fa41408fe4d46aebb2ad9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7106062563881164153, guid: 19d15ccf6d2fa41408fe4d46aebb2ad9, type: 3}
       propertyPath: m_Pivot.x
@@ -22903,7 +22909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2137447086
 Transform:
   m_ObjectHideFlags: 0
