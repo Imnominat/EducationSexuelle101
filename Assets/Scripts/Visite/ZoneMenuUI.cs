@@ -66,12 +66,14 @@ public class ZoneMenuUI : MonoBehaviour
 
     public void TeleportToZone(int zoneIndex)
     {
-        if (anatomyNavigator == null || splineNavigator == null) return;
+        Debug.Log($"ZoneMenuUI: TeleportToZone1({zoneIndex})");
+        if (anatomyNavigator == null || splineNavigator == null) return; 
+        Debug.Log($"ZoneMenuUI: TeleportToZone2({zoneIndex})");
         if (zoneIndex < 0 || zoneIndex >= anatomyNavigator.zones.Count) return;
-
+        Debug.Log($"ZoneMenuUI: TeleportToZone3({zoneIndex})");
         AnatomyZone zone = anatomyNavigator.zones[zoneIndex];
         if (zone.waypoint == null) return;
-
+        Debug.Log($"ZoneMenuUI: TeleportToZone4({zoneIndex})");
         if (splineNavigator.JumpToWaypoint(zone.waypoint))
             anatomyNavigator.ActivateZoneByIndex(zoneIndex);
     }

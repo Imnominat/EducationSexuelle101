@@ -9,6 +9,12 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 // de pivot (mémorisé en espace local du XR Origin, pour continuer à suivre la téléportation/
 // les déplacements du joueur) au moment du grab, et seule l'inclinaison du joystick fait
 // varier la distance ensuite ; la rotation du poignet continue de viser librement.
+//
+// La direction utilisée pour positionner l'objet vient de interactor.transform.forward (visée
+// réelle du contrôleur), pas de attach.forward : le Rotate Manipulation natif du XRRayInteractor
+// (joystick gauche/droite) fait tourner l'attach transform sur lui-même pour faire pivoter l'objet
+// tenu, et si on utilisait attach.forward ici, cette rotation ferait aussi dériver la position
+// (l'objet swinguerait autour du pivot au lieu de simplement tourner sur lui-même).
 [RequireComponent(typeof(XRRayInteractor))]
 public class GrabDistanceAnchor : MonoBehaviour
 {
@@ -72,6 +78,6 @@ public class GrabDistanceAnchor : MonoBehaviour
 
         var attach = interactor.attachTransform;
         var pivotWorld = xrOrigin.transform.TransformPoint(pivotLocalOffset);
-        attach.position = pivotWorld + attach.forward * currentDistance;
+        attach.position = pivotWorld + interactor.transform.forward * currentDistance;
     }
 }

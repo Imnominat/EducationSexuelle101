@@ -2551,6 +2551,7 @@ MonoBehaviour:
   sceneName: MecaniqueF
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &443490166
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3108,6 +3109,7 @@ MonoBehaviour:
   sceneName: AnatomieM
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &521523656
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3491,6 +3493,7 @@ MonoBehaviour:
   sceneName: Chambre
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &608653842
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4872,6 +4875,7 @@ MonoBehaviour:
   sceneName: AnatomieF
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &871204906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5708,6 +5712,7 @@ MonoBehaviour:
   sceneName: Pharmacie
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &1088214876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6133,7 +6138,7 @@ MonoBehaviour:
   m_ParentInteractableObject: {fileID: 0}
   m_TeleportationProvider: {fileID: 1607483174}
   m_MatchOrientation: 0
-  m_MatchDirectionalInput: 0
+  m_MatchDirectionalInput: 1
   m_TeleportTrigger: 0
   m_FilterSelectionByHitNormal: 0
   m_UpNormalToleranceDegrees: 30
@@ -6974,6 +6979,7 @@ MonoBehaviour:
   sceneName: Pharmacie
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &1301040152
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7102,6 +7108,7 @@ MonoBehaviour:
   sceneName: Chambre
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &1323415750
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7332,6 +7339,7 @@ MonoBehaviour:
   sceneName: Mecanique
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!65 &1368492021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7732,6 +7740,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1319746312, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_RotateMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1680501587, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.85
@@ -7792,9 +7804,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2449787133337329437, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2766569358201078490, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204924275657038271, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4778211696441940833, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_SmoothMotionEnabled
@@ -7804,9 +7824,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5663893676086941514, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_TeleportMode
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5663893676086941514, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_TeleportModeCancel
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6232745470614056090, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_Height
       value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480925242510836759, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_RightHandTurnInput.m_InputActionReference
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347985736721345035, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_RightHandTurnInput.m_InputActionReference
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8248,6 +8284,7 @@ MonoBehaviour:
   sceneName: MecaniqueM
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &1502315300
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8480,6 +8517,7 @@ MonoBehaviour:
   sceneName: AnatomieM
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &1511346228
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11496,6 +11534,7 @@ MonoBehaviour:
   sceneName: AnatomieF
   playerTag: Player
   directEntry: 0
+  fadeOutDuration: 0.3
 --- !u!23 &2089014956
 MeshRenderer:
   m_ObjectHideFlags: 0
