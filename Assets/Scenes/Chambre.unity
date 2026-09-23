@@ -1786,7 +1786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8039,10 +8039,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f116a8f3e99c2584e844ff3515890a68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChambreGameManager
-  totalBlockers: 2
+  totalBlockers: 5
   autoCountBlockers: 1
   blockerCountText: {fileID: 1414974705}
   victoryPanel: {fileID: 2042063277}
+  victoryText: {fileID: 1926499968}
+  blockersDoneMessage: "Vous avez trouv\xE9 tous les \xE9l\xE9ments bloqueurs. Maintenant
+    jetez tous les \xE9l\xE9ments non bloqueurs afin de comprendre pourquoi ils ne
+    le sont pas."
+  allSortedMessage: "F\xE9licitation, vous avez jet\xE9 tous les objets pouvant \xEAtre
+    un bloqueur pour une relation ou non !"
+  poubelleCubeRenderer: {fileID: 622377504}
+  blockersDoneMaterial: {fileID: 2100000, guid: 843d6d07af57bb9488af7ff0be10a9a7, type: 2}
 --- !u!4 &1295495826
 Transform:
   m_ObjectHideFlags: 0
