@@ -22899,6 +22899,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 417609604309463351, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541664190202932892, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3776833342920770976, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -22942,6 +22950,18 @@ PrefabInstance:
     - target: {fileID: 4549147200119414554, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
       propertyPath: m_Name
       value: female_urinary_system
+      objectReference: {fileID: 0}
+    - target: {fileID: 5177336077449963031, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5295698108392073632, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985294328133394638, guid: d4edbb66385e64648bc6d8a99ceebbde, type: 3}
+      propertyPath: m_MovementType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
