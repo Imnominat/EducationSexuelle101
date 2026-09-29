@@ -13,6 +13,18 @@ public class AnatomyScaleManager : MonoBehaviour
     public float microScale = 1f / 300f;
     public float transitionDuration = 3f;
 
+    [Header("UI à préserver du rétrécissement")]
+    [Tooltip("Canvas enfant de la caméra (menu de zones, etc.). Étant sous xrRig, il rétrécit " +
+             "avec le reste du corps du joueur : la distance main-caméra s'effondre proportionnellement " +
+             "au rétrécissement, ce qui rend le rayon du contrôleur impossible à viser précisément " +
+             "(le point visé ne dépend quasiment plus de l'orientation de la main). On compense donc " +
+             "sa position/échelle locale pour qu'il garde une taille et une distance constantes face " +
+             "au joueur, quelle que soit l'échelle du rig.")]
+    public Transform[] scaleCompensatedUI;
+
+    private Vector3[] compensatedUINormalLocalPos;
+    private Vector3[] compensatedUINormalLocalScale;
+
     [Header("Debug clavier — désactiver en prod")]
     public bool keyboardTrigger = false;
 
@@ -27,6 +39,18 @@ public class AnatomyScaleManager : MonoBehaviour
     {
         // Sauvegarder le nearClipPlane d'origine
         normalNearClip = xrCamera != null ? xrCamera.nearClipPlane : 0.01f;
+
+        if (scaleCompensatedUI != null)
+        {
+            compensatedUINormalLocalPos = new Vector3[scaleCompensatedUI.Length];
+            compensatedUINormalLocalScale = new Vector3[scaleCompensatedUI.Length];
+            for (int i = 0; i < scaleCompensatedUI.Length; i++)
+            {
+                if (scaleCompensatedUI[i] == null) continue;
+                compensatedUINormalLocalPos[i] = scaleCompensatedUI[i].localPosition;
+                compensatedUINormalLocalScale[i] = scaleCompensatedUI[i].localScale;
+            }
+        }
     }
 
     void Update()
@@ -82,5 +106,20 @@ public class AnatomyScaleManager : MonoBehaviour
         // Le joueur est minuscule : les parois sont très proches en world-space.
         if (xrCamera != null)
             xrCamera.nearClipPlane = normalNearClip * scale / normalScale;
+
+        // Compenser l'échelle du rig sur l'UI enfant de la caméra (ex: menu de zones) pour
+        // qu'elle garde une taille et une distance constantes face au joueur, quelle que soit
+        // l'échelle courante — sinon elle rétrécit avec le reste du corps du joueur et la
+        // distance main-caméra s'effondre, rendant le rayon du contrôleur impossible à viser.
+        if (scaleCompensatedUI != null)
+        {
+            float factor = normalScale / scale;
+            for (int i = 0; i < scaleCompensatedUI.Length; i++)
+            {
+                if (scaleCompensatedUI[i] == null) continue;
+                scaleCompensatedUI[i].localPosition = compensatedUINormalLocalPos[i] * factor;
+                scaleCompensatedUI[i].localScale = compensatedUINormalLocalScale[i] * factor;
+            }
+        }
     }
 }

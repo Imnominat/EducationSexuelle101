@@ -5103,6 +5103,8 @@ MonoBehaviour:
   normalScale: 1
   microScale: 0.0033333334
   transitionDuration: 3
+  scaleCompensatedUI:
+  - {fileID: 1393832069}
   keyboardTrigger: 1
 --- !u!1 &1461881245 stripped
 GameObject:
