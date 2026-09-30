@@ -22,6 +22,9 @@ public class MurValidation : MonoBehaviour
         // Détache la plaquette de son parent actuel
         p.transform.SetParent(this.transform);
 
+        // Prend la couleur de validation propre à ce mur
+        p.SetCouleur(couleurValidee);
+
         // Recalcule la grille avec la nouvelle plaquette
         _plaquettesAffichees.Add(p.gameObject);
         ReorganiserGrille();

@@ -21,6 +21,11 @@ public class FeedbackManager : MonoBehaviour
     [Tooltip("Prefab d'un Canvas WorldSpace avec un Text pour afficher l'explication.")]
     public GameObject explanationPanelPrefab;
 
+    [Tooltip("Si renseigné, le panneau d'explication est placé à la position et avec la rotation de ce Transform " +
+             "(ex: devant l'écran de la TV) au lieu d'apparaître au-dessus de l'objet face à la caméra. " +
+             "Son axe forward doit pointer à l'opposé du joueur, comme un Canvas WorldSpace.")]
+    public Transform explanationAnchor;
+
     [Header("Timings")]
     [Tooltip("Durée d'affichage de l'image de validation avant de commencer le fade.")]
     public float correctDisplayDuration = 1.5f;
@@ -118,10 +123,18 @@ public class FeedbackManager : MonoBehaviour
 
     private IEnumerator ShowExplanationPanel(Vector3 objectPosition, string explanation)
     {
-        Vector3 spawnPos = objectPosition + Vector3.up * explanationHeightOffset;
-        GameObject panel = Instantiate(explanationPanelPrefab, spawnPos, Quaternion.identity);
+        GameObject panel;
+        if (explanationAnchor != null)
+        {
+            panel = Instantiate(explanationPanelPrefab, explanationAnchor.position, explanationAnchor.rotation);
+        }
+        else
+        {
+            Vector3 spawnPos = objectPosition + Vector3.up * explanationHeightOffset;
+            panel = Instantiate(explanationPanelPrefab, spawnPos, Quaternion.identity);
+            FaceCamera(panel);
+        }
         _currentExplanationPanel = panel;
-        FaceCamera(panel);
 
         Text textComponent = panel.GetComponentInChildren<Text>();
         if (textComponent != null)

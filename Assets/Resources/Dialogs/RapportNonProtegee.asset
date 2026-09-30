@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41825bf27e815c46b1006b2c7c7c638, type: 3}
   m_Name: RapportNonProtegee
   m_EditorClassIdentifier: Dialogs::Dialogs.ResponseData
-  ResponseText: "j'ai eu un rapport non prot\xE9g\xE9 hier"
+  ResponseText: "J'ai eu un rapport non prot\xE9g\xE9 hier, que puis-je faire ?"
   ResponseAudioClip: {fileID: 0}
   NextDialogID: RapportNonProtegee

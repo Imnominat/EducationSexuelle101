@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41825bf27e815c46b1006b2c7c7c638, type: 3}
   m_Name: RCapotes
   m_EditorClassIdentifier: Dialogs::Dialogs.ResponseData
-  ResponseText: "je veux des pr\xE9servatifs"
+  ResponseText: "Je voudrais des pr\xE9servatifs s'il vous pla\xEEt. "
   ResponseAudioClip: {fileID: 0}
   NextDialogID: Capotes

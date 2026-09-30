@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e880d14b140824a96a85045c40f62b, type: 3}
   m_Name: DRapportNonProtegee
   m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
-  DialogText: "D'accord, si vous le permettez, \xEAtes vous une femme ? (faudra retravailler
-    cette phrase) "
+  DialogText: "Concernant le risque de grossesse : je peux vous proposer une contraception
+    d'urgence hormonale, commn\xE9ment appel\xE9e \"pilule du lendemain\". Elle est
+    gratuite, sans prescription m\xE9dicale et sans avance de frais, pour toute personne
+    mineure ou majeure. Il s\u2019agit d\u2019un seul comprim\xE9 \xE0 prendre le
+    plus rapidement possible et au plus tard dans les 3 jours qui suivent le rapport
+    sexuel sans contraception pour les sp\xE9cialit\xE9s \xE0 base de levonorgestrel,
+    et dans les 5 jours pour la sp\xE9cialit\xE9 \xE0 base d\u2019ulipristal ac\xE9tate.
+    Concernant le risque de transmission de maladie sexuellement transmissible :
+    je vous invite \xE0 en parler le plus rapidement possible \xE0 votre m\xE9decin,
+    ou \xE0 vous adresser \xE0 un centre de d\xE9pistage."
   DialogAudioClip: {fileID: 0}
   DialogIcon: {fileID: 0}

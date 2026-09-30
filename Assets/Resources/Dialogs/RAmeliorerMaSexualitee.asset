@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41825bf27e815c46b1006b2c7c7c638, type: 3}
   m_Name: RAmeliorerMaSexualitee
   m_EditorClassIdentifier: Dialogs::Dialogs.ResponseData
-  ResponseText: "je voudrais des traitements pour am\xE9liorer ma sexualit\xE9"
+  ResponseText: "Je voudrais des traitements pour am\xE9liorer ma sexualit\xE9. "
   ResponseAudioClip: {fileID: 0}
   NextDialogID: AmeliorerMaSexualitee

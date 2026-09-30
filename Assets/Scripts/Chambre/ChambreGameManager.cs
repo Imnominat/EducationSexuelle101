@@ -37,13 +37,17 @@ public class ChambreGameManager : MonoBehaviour
     [Tooltip("Texte affichant le nombre de bloqueurs restants.")]
     public TMP_Text blockerCountText;
 
-    [Tooltip("Panel affiché quand tous les bloqueurs sont correctement triés, puis quand tout est trié.")]
+    [Tooltip("Panel affiché dès le démarrage (consigne), puis mis à jour quand les bloqueurs, puis tous les objets, sont triés.")]
     public GameObject victoryPanel;
 
     [Tooltip("Texte du panel de victoire, mis à jour selon la phase atteinte.")]
     public TMP_Text victoryText;
 
     [Header("Messages du panel de victoire")]
+    [Tooltip("Message affiché au démarrage de la scène, avant que le joueur ne jette quoi que ce soit.")]
+    [TextArea(2, 5)]
+    public string introMessage = "Identifie les facteurs qui pourraient représenter un blocage dans le cadre d'une relation sexuelle, puis met les dans la poubelle.";
+
     [Tooltip("Message affiché une fois tous les bloqueurs jetés.")]
     [TextArea(2, 5)]
     public string blockersDoneMessage = "Vous avez trouvé tous les éléments bloqueurs. Maintenant jetez tous les éléments non bloqueurs afin de comprendre pourquoi ils ne le sont pas.";
@@ -87,7 +91,8 @@ public class ChambreGameManager : MonoBehaviour
         _remainingNonBlockers = _totalNonBlockers;
         UpdateCounterUI();
 
-        if (victoryPanel != null) victoryPanel.SetActive(false);
+        if (victoryText != null) victoryText.text = introMessage;
+        if (victoryPanel != null) victoryPanel.SetActive(true);
     }
 
     /// <summary>

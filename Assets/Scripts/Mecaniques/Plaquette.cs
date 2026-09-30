@@ -176,7 +176,7 @@ public class Plaquette : MonoBehaviour
     // ─────────────────────────────────────────
     // INTERNE
     // ─────────────────────────────────────────
-    void SetCouleur(Color c)
+    public void SetCouleur(Color c)
     {
         if (cardRenderer != null)
             cardRenderer.material.color = c;

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DCapotes
   m_EditorClassIdentifier: Dialogs::Dialogs.DialogData
   DialogText: "Pas de probl\xE8me, voici vos pr\xE9servatifs. \nSi vous avez moins
-    de 26 ans, ils sont gratuit."
+    de 26 ans, ils sont gratuits. Si vous avez plus de 26 ans, certaines marques
+    de pr\xE9servatifs masculins sont concern\xE9es par le remboursement par l'Assurance
+    Maladie \xE0 hauteur de 60 %. "
   DialogAudioClip: {fileID: 0}
   DialogIcon: {fileID: 0}
