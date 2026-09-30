@@ -9,7 +9,7 @@ public class ZoneTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("XRCamera") || other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
             navigator.ActivateZoneByIndex(zoneIndex);
     }
 }

@@ -359,28 +359,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 27533564}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
---- !u!1 &27533563 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
-  m_PrefabInstance: {fileID: 27533562}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &27533564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27533563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694666c0341a6df4ab6cf5132d68d979, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::XRSimulatorController
 --- !u!1 &97927235
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,7 +5085,7 @@ MonoBehaviour:
   transitionDuration: 3
   scaleCompensatedUI:
   - {fileID: 1393832069}
-  keyboardTrigger: 1
+  keyboardTrigger: 0
 --- !u!1 &1461881245 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1670256624, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
@@ -6508,72 +6488,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900949022}
   m_CullTransparentMesh: 1
---- !u!1 &1912410929
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1912410931}
-  - component: {fileID: 1912410930}
-  m_Layer: 0
-  m_Name: WorldManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1912410930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912410929}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a74d361e2f6a1d34a84ad8047f7202f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BananaWorldRotator
-  worldContainer: {fileID: 1945880882}
-  playerHead: {fileID: 435236855}
-  xrOrigin: {fileID: 210780582}
-  splinePoints:
-  - {fileID: 1646999519}
-  - {fileID: 99279325}
-  - {fileID: 660625721}
-  - {fileID: 1831013231}
-  - {fileID: 762064274}
-  - {fileID: 2068269473}
-  - {fileID: 1622425613}
-  - {fileID: 2115894170}
-  - {fileID: 1195266013}
-  - {fileID: 1742735568}
-  - {fileID: 175335995}
-  - {fileID: 1989396049}
-  smoothSpeed: 3
-  activationDistance: 1.5
-  isActive: 0
-  pitchOffset: 0
-  currentT: 0
-  currentAngle: 0
---- !u!4 &1912410931
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912410929}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.92516, y: 2.19, z: 8.47}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920330966
 GameObject:
   m_ObjectHideFlags: 0
@@ -8051,7 +7965,6 @@ SceneRoots:
   - {fileID: 27533562}
   - {fileID: 1212229056}
   - {fileID: 1945880882}
-  - {fileID: 1912410931}
   - {fileID: 1091790997}
   - {fileID: 1016070453}
   - {fileID: 2278130553157606373}

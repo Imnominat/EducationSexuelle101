@@ -15,6 +15,6 @@ public class MarkVisitComplete : MonoBehaviour
         if (ProgressManager.Instance != null)
             ProgressManager.Instance.SetVisited(visitKey);
         else
-            Debug.LogWarning("[MarkVisitComplete] ProgressManager introuvable — lance la scène Main en premier.");
+            Debug.LogWarning("[MarkVisitComplete] ProgressManager introuvable — il est créé par les salles Anatomie : lance AnatomieF ou AnatomieM avant la visite.");
     }
 }

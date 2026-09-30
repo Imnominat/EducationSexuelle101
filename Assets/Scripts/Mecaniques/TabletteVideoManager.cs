@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// Gère l'apparition des deux tablettes vidéo une fois la séquence de plaquettes terminée.
-/// Wirer : GameManager → OnSequenceCompleteEvent → TabletteVideoManager.AfficherTablettes()
+/// Wirer : MecaniqueManager → OnSequenceCompleteEvent → TabletteVideoManager.AfficherTablettes()
 /// </summary>
 public class TabletteVideoManager : MonoBehaviour
 {
@@ -21,7 +21,7 @@ public class TabletteVideoManager : MonoBehaviour
         if (_tablette2 != null) _tablette2.gameObject.SetActive(false);
     }
 
-    // Appelé par GameManager.OnSequenceCompleteEvent (wirer dans l'Inspector)
+    // Appelé par MecaniqueManager.OnSequenceCompleteEvent (wirer dans l'Inspector)
     public void AfficherTablettes()
     {
         StartCoroutine(ApparitreLesDeuxTablettes());

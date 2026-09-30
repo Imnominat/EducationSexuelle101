@@ -55,7 +55,7 @@ public class AnatomyScaleManager : MonoBehaviour
 
     void Update()
     {
-        if (!keyboardTrigger || isTransitioning) return;
+        if (!keyboardTrigger || isTransitioning || Keyboard.current == null) return;
         if (Keyboard.current.eKey.wasPressedThisFrame && !isMicro) EnterMicroMode();
         if (Keyboard.current.qKey.wasPressedThisFrame && isMicro)  ExitMicroMode();
     }

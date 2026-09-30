@@ -9,7 +9,7 @@ using UnityEngine;
 ///   3 étoiles — 2 vidéos regardées jusqu'à la fin
 ///
 /// Wiring : assignez les deux TabletteVideo dans l'inspector.
-/// GameManager.OnSequenceCompleteEvent → MecaniqueProgressReporter.OnPlaquettesComplete
+/// MecaniqueManager.OnSequenceCompleteEvent → MecaniqueProgressReporter.OnPlaquettesComplete
 /// </summary>
 public class MecaniqueProgressReporter : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class MecaniqueProgressReporter : MonoBehaviour
         if (_tablette2 != null) _tablette2.OnVideoCompleted.RemoveListener(OnVideoFinie);
     }
 
-    // Appelé par GameManager.OnSequenceCompleteEvent (wirer dans l'Inspector)
+    // Appelé par MecaniqueManager.OnSequenceCompleteEvent (wirer dans l'Inspector)
     public void OnPlaquettesComplete()
     {
         ProgressManager.Instance.SetStars(RoomId.Mecanique, 1);

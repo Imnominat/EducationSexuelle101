@@ -44,7 +44,7 @@ public class ZoneDepot : MonoBehaviour
             _plaquettesValidees.Add(p);
             p.OnDeposeCorrectement();
             JouerSon(sonSucces);
-            GameManager.Instance.OnBonnePlaquette();
+            MecaniqueManager.Instance.OnBonnePlaquette();
 
             // Envoie la plaquette sur le mur de validation
             if (murValidation != null)
@@ -57,7 +57,7 @@ public class ZoneDepot : MonoBehaviour
             // ❌ Mauvaise plaquette ou mauvaise zone
             p.OnErreur();
             JouerSon(sonErreur);
-            GameManager.Instance.OnMauvaisePlaquette(p);
+            MecaniqueManager.Instance.OnMauvaisePlaquette(p);
             StartCoroutine(ResetPlaquetteApresDelai(p));
         }
     }
